@@ -1,0 +1,629 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		06E1117CCB6851C0FC4FFA0E /* GatewayOperatorStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD23D8667BFDC912750743B1 /* GatewayOperatorStoreTests.swift */; };
+		0C6668CAC99E151044D39B8D /* ChannelsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C705B70239BDC841C82F43 /* ChannelsView.swift */; };
+		0F6ED84308D1CA495CD5C620 /* RootTabTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044A9C9FDA5BB93CA845080D /* RootTabTests.swift */; };
+		130AFF870B917CD6E7A195B5 /* GatewayOperatorStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F2172215DA6B02C45049F5 /* GatewayOperatorStore.swift */; };
+		18A5F6E951146F64285B4DDC /* GatewayEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18FD05CA830973120D88D13 /* GatewayEndpoint.swift */; };
+		1A5709731451765740EF9546 /* DeviceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7173950FB7A8C4D64B52AA0A /* DeviceService.swift */; };
+		26CBFDA684C3CB5FC8327D90 /* GatewayOperatorService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A793868407126126B1FA396 /* GatewayOperatorService.swift */; };
+		2A344ABE8F5C8E5A5F5E8A6A /* GatewayTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3390A0D1C328C372F62C638 /* GatewayTransport.swift */; };
+		32B08A49953731C65C47C9D5 /* GatewayLiveOperatorServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A58A99962E55E5CF5E39B7E /* GatewayLiveOperatorServiceTests.swift */; };
+		3358BBB6C7B00D7177BA19B7 /* DebugViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E598FE6BF7FB6EABECD3BBB /* DebugViewModel.swift */; };
+		352BACAA1B2CA726112BF25F /* OpenClawTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8DB5CB9FC81E42D784A67B /* OpenClawTheme.swift */; };
+		3B47866F8B156645D8804A1F /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AAF61B2008F605E3D35A5E /* ActivityView.swift */; };
+		3CECD9141D97FEA0D22E1A30 /* AggregateDiscoveryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F9B76FA2D536AC534547E2 /* AggregateDiscoveryService.swift */; };
+		440470293A48272DEA8A9C2E /* GatewayChannel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72964D3AA4370F4C361C88CC /* GatewayChannel.swift */; };
+		47A6801A421EE8B4616C3362 /* TailscaleDiscoveryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB73846B85798989DBC59DA0 /* TailscaleDiscoveryService.swift */; };
+		5216691517A992CBD2511F12 /* GatewayEndpointTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC8A1F433A440BA512A93E5 /* GatewayEndpointTests.swift */; };
+		5C56E76673FEC4663DB0B812 /* NodesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5DDCBC05409696E8E0EB45 /* NodesView.swift */; };
+		66E7104110105D0D395D3CDE /* GatewaySessionDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77EE868FB2BB6DEFF394A33 /* GatewaySessionDisplay.swift */; };
+		68395C98DCDC41C4EC465E4E /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A60D6CEF8CA92E6AE71D2AF8 /* ChatView.swift */; };
+		78EF32D9B4D9941CB2CD5D94 /* RootTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = BADF2D4A270449767D5B1217 /* RootTab.swift */; };
+		80588D6CC78939BA9031EAD0 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC07B60FCDE545F7751290DF /* SettingsView.swift */; };
+		86EAFAC5C7B73BE4A4D937B3 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53DF32FDBA242D6D0AB0FEC /* RootView.swift */; };
+		9854E6BB1B8392EC62FD4FCC /* GatewayDiscoveryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2AF0CCFE60156CEAD856F67 /* GatewayDiscoveryService.swift */; };
+		9D00C690534D83ABC28AD389 /* MockGatewayOperatorService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78DFCC9C8D8E370BEBBE5B06 /* MockGatewayOperatorService.swift */; };
+		9EF7A44D44AA43D8C4CF4DED /* BonjourDiscoveryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C09263FDC595D6C0186CAD1 /* BonjourDiscoveryService.swift */; };
+		BA0A887429D3C80FD056368E /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A8157C9686DC3142258342 /* HomeView.swift */; };
+		CC32DB68D098C80C0AA66704 /* OpenClawIOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6475A243E7883F749C28A1B0 /* OpenClawIOSApp.swift */; };
+		CFFCA6298BC2AC15BC0D5A84 /* DeviceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E176372CB8BAF8C01A4FA91 /* DeviceView.swift */; };
+		D1B9B0035F17126FCDB1FC6C /* GatewayCredentialsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8522E405FD455CBEAA8FEB /* GatewayCredentialsStore.swift */; };
+		D72AB553CA727642462557FC /* GatewayCredentialsStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A53A01BD4D2998AE1F2461 /* GatewayCredentialsStoreTests.swift */; };
+		E85D015DB6C4112309F8D06B /* GatewaySessionDisplayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 915A7C64E1BE9FFB5281E1A3 /* GatewaySessionDisplayTests.swift */; };
+		F11E7243BCEEDC29A96B4162 /* DebugView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A884DDF67885F03B9117DDB /* DebugView.swift */; };
+		F687FFA324CD4EA307926A59 /* AppSessionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E7E15895AE8BFC53A0322BC /* AppSessionModel.swift */; };
+		FDD792BA5F138A7B84AFD3CD /* GatewayRPCModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E250C461F62D8E85A4EB4C5 /* GatewayRPCModels.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		6DDE53CA8B6BB807024BC8B3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 13FB9EAD9710C68792C112DB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8584BE555DB0E9B400C0C0B9;
+			remoteInfo = OpenClawIOS;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		044A9C9FDA5BB93CA845080D /* RootTabTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootTabTests.swift; sourceTree = "<group>"; };
+		1C09263FDC595D6C0186CAD1 /* BonjourDiscoveryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonjourDiscoveryService.swift; sourceTree = "<group>"; };
+		1E8DB5CB9FC81E42D784A67B /* OpenClawTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenClawTheme.swift; sourceTree = "<group>"; };
+		26F9B76FA2D536AC534547E2 /* AggregateDiscoveryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AggregateDiscoveryService.swift; sourceTree = "<group>"; };
+		3A58A99962E55E5CF5E39B7E /* GatewayLiveOperatorServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatewayLiveOperatorServiceTests.swift; sourceTree = "<group>"; };
+		3E598FE6BF7FB6EABECD3BBB /* DebugViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugViewModel.swift; sourceTree = "<group>"; };
+		49C705B70239BDC841C82F43 /* ChannelsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelsView.swift; sourceTree = "<group>"; };
+		4A793868407126126B1FA396 /* GatewayOperatorService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatewayOperatorService.swift; sourceTree = "<group>"; };
+		5A884DDF67885F03B9117DDB /* DebugView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugView.swift; sourceTree = "<group>"; };
+		6475A243E7883F749C28A1B0 /* OpenClawIOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenClawIOSApp.swift; sourceTree = "<group>"; };
+		6D8522E405FD455CBEAA8FEB /* GatewayCredentialsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatewayCredentialsStore.swift; sourceTree = "<group>"; };
+		6E250C461F62D8E85A4EB4C5 /* GatewayRPCModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatewayRPCModels.swift; sourceTree = "<group>"; };
+		6E5956E03A802792F3F26874 /* OpenClawIOS.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = OpenClawIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7173950FB7A8C4D64B52AA0A /* DeviceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceService.swift; sourceTree = "<group>"; };
+		71A53A01BD4D2998AE1F2461 /* GatewayCredentialsStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatewayCredentialsStoreTests.swift; sourceTree = "<group>"; };
+		72964D3AA4370F4C361C88CC /* GatewayChannel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatewayChannel.swift; sourceTree = "<group>"; };
+		78DFCC9C8D8E370BEBBE5B06 /* MockGatewayOperatorService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockGatewayOperatorService.swift; sourceTree = "<group>"; };
+		7E7E15895AE8BFC53A0322BC /* AppSessionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSessionModel.swift; sourceTree = "<group>"; };
+		83AAF61B2008F605E3D35A5E /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
+		915A7C64E1BE9FFB5281E1A3 /* GatewaySessionDisplayTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatewaySessionDisplayTests.swift; sourceTree = "<group>"; };
+		9AC8A1F433A440BA512A93E5 /* GatewayEndpointTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatewayEndpointTests.swift; sourceTree = "<group>"; };
+		9E04F1578037D18BA1DD96BB /* OpenClawIOSTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = OpenClawIOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		9E176372CB8BAF8C01A4FA91 /* DeviceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceView.swift; sourceTree = "<group>"; };
+		A18FD05CA830973120D88D13 /* GatewayEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatewayEndpoint.swift; sourceTree = "<group>"; };
+		A60D6CEF8CA92E6AE71D2AF8 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
+		BADF2D4A270449767D5B1217 /* RootTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootTab.swift; sourceTree = "<group>"; };
+		CD23D8667BFDC912750743B1 /* GatewayOperatorStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatewayOperatorStoreTests.swift; sourceTree = "<group>"; };
+		D2AF0CCFE60156CEAD856F67 /* GatewayDiscoveryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatewayDiscoveryService.swift; sourceTree = "<group>"; };
+		DB5DDCBC05409696E8E0EB45 /* NodesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodesView.swift; sourceTree = "<group>"; };
+		DB73846B85798989DBC59DA0 /* TailscaleDiscoveryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TailscaleDiscoveryService.swift; sourceTree = "<group>"; };
+		E1F2172215DA6B02C45049F5 /* GatewayOperatorStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatewayOperatorStore.swift; sourceTree = "<group>"; };
+		E53DF32FDBA242D6D0AB0FEC /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		E77EE868FB2BB6DEFF394A33 /* GatewaySessionDisplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatewaySessionDisplay.swift; sourceTree = "<group>"; };
+		F3390A0D1C328C372F62C638 /* GatewayTransport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatewayTransport.swift; sourceTree = "<group>"; };
+		F4A8157C9686DC3142258342 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		FC07B60FCDE545F7751290DF /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		0F7A9167C8208C5A6511E768 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				6475A243E7883F749C28A1B0 /* OpenClawIOSApp.swift */,
+				BADF2D4A270449767D5B1217 /* RootTab.swift */,
+				E53DF32FDBA242D6D0AB0FEC /* RootView.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		168D4C43CC0D920AA8A999F1 /* OpenClawIOSTests */ = {
+			isa = PBXGroup;
+			children = (
+				71A53A01BD4D2998AE1F2461 /* GatewayCredentialsStoreTests.swift */,
+				9AC8A1F433A440BA512A93E5 /* GatewayEndpointTests.swift */,
+				3A58A99962E55E5CF5E39B7E /* GatewayLiveOperatorServiceTests.swift */,
+				CD23D8667BFDC912750743B1 /* GatewayOperatorStoreTests.swift */,
+				915A7C64E1BE9FFB5281E1A3 /* GatewaySessionDisplayTests.swift */,
+				044A9C9FDA5BB93CA845080D /* RootTabTests.swift */,
+			);
+			path = OpenClawIOSTests;
+			sourceTree = "<group>";
+		};
+		29ED454F689062507983F18B /* Device */ = {
+			isa = PBXGroup;
+			children = (
+				7173950FB7A8C4D64B52AA0A /* DeviceService.swift */,
+			);
+			path = Device;
+			sourceTree = "<group>";
+		};
+		4C5DCE5E4FF02624B3679927 /* Debug */ = {
+			isa = PBXGroup;
+			children = (
+				5A884DDF67885F03B9117DDB /* DebugView.swift */,
+				3E598FE6BF7FB6EABECD3BBB /* DebugViewModel.swift */,
+			);
+			path = Debug;
+			sourceTree = "<group>";
+		};
+		67567FF57B8ACB692A483332 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				F4A8157C9686DC3142258342 /* HomeView.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		75396EFAE8894CB008854979 /* Device */ = {
+			isa = PBXGroup;
+			children = (
+				9E176372CB8BAF8C01A4FA91 /* DeviceView.swift */,
+			);
+			path = Device;
+			sourceTree = "<group>";
+		};
+		7889431C8868718126944F94 /* Nodes */ = {
+			isa = PBXGroup;
+			children = (
+				DB5DDCBC05409696E8E0EB45 /* NodesView.swift */,
+			);
+			path = Nodes;
+			sourceTree = "<group>";
+		};
+		7D59CC6E9D758028FCA28439 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				FC07B60FCDE545F7751290DF /* SettingsView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		979B0D0D9264AEC3834D2864 /* Activity */ = {
+			isa = PBXGroup;
+			children = (
+				83AAF61B2008F605E3D35A5E /* ActivityView.swift */,
+			);
+			path = Activity;
+			sourceTree = "<group>";
+		};
+		9C107B6D3A937299E4A0EAE4 /* Gateway */ = {
+			isa = PBXGroup;
+			children = (
+				26F9B76FA2D536AC534547E2 /* AggregateDiscoveryService.swift */,
+				1C09263FDC595D6C0186CAD1 /* BonjourDiscoveryService.swift */,
+				72964D3AA4370F4C361C88CC /* GatewayChannel.swift */,
+				6D8522E405FD455CBEAA8FEB /* GatewayCredentialsStore.swift */,
+				D2AF0CCFE60156CEAD856F67 /* GatewayDiscoveryService.swift */,
+				A18FD05CA830973120D88D13 /* GatewayEndpoint.swift */,
+				4A793868407126126B1FA396 /* GatewayOperatorService.swift */,
+				E1F2172215DA6B02C45049F5 /* GatewayOperatorStore.swift */,
+				6E250C461F62D8E85A4EB4C5 /* GatewayRPCModels.swift */,
+				E77EE868FB2BB6DEFF394A33 /* GatewaySessionDisplay.swift */,
+				F3390A0D1C328C372F62C638 /* GatewayTransport.swift */,
+				78DFCC9C8D8E370BEBBE5B06 /* MockGatewayOperatorService.swift */,
+				DB73846B85798989DBC59DA0 /* TailscaleDiscoveryService.swift */,
+			);
+			path = Gateway;
+			sourceTree = "<group>";
+		};
+		A13B417E523A8FBBA4A94D12 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				979B0D0D9264AEC3834D2864 /* Activity */,
+				AA9E760208B732359AD8AB15 /* Channels */,
+				C56015E509028FA14636448A /* Chat */,
+				4C5DCE5E4FF02624B3679927 /* Debug */,
+				75396EFAE8894CB008854979 /* Device */,
+				67567FF57B8ACB692A483332 /* Home */,
+				7889431C8868718126944F94 /* Nodes */,
+				7D59CC6E9D758028FCA28439 /* Settings */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		A876321BA7D4DA9C2EFEC1C8 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				7E7E15895AE8BFC53A0322BC /* AppSessionModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		A9C7B8138F053CB303A1EE6A /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				1E8DB5CB9FC81E42D784A67B /* OpenClawTheme.swift */,
+			);
+			path = Theme;
+			sourceTree = "<group>";
+		};
+		AA9E760208B732359AD8AB15 /* Channels */ = {
+			isa = PBXGroup;
+			children = (
+				49C705B70239BDC841C82F43 /* ChannelsView.swift */,
+			);
+			path = Channels;
+			sourceTree = "<group>";
+		};
+		C56015E509028FA14636448A /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				A60D6CEF8CA92E6AE71D2AF8 /* ChatView.swift */,
+			);
+			path = Chat;
+			sourceTree = "<group>";
+		};
+		D8767CDCC08FAD0614FB88D2 /* OpenClawIOS */ = {
+			isa = PBXGroup;
+			children = (
+				0F7A9167C8208C5A6511E768 /* App */,
+				F7F5E97B46D715DA82C74C9D /* Core */,
+				A13B417E523A8FBBA4A94D12 /* Features */,
+			);
+			path = OpenClawIOS;
+			sourceTree = "<group>";
+		};
+		E97E0EFB18FBB3B6C1FC1230 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6E5956E03A802792F3F26874 /* OpenClawIOS.app */,
+				9E04F1578037D18BA1DD96BB /* OpenClawIOSTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		EF2B664179DE73E93A568250 = {
+			isa = PBXGroup;
+			children = (
+				D8767CDCC08FAD0614FB88D2 /* OpenClawIOS */,
+				168D4C43CC0D920AA8A999F1 /* OpenClawIOSTests */,
+				E97E0EFB18FBB3B6C1FC1230 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F7F5E97B46D715DA82C74C9D /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				29ED454F689062507983F18B /* Device */,
+				9C107B6D3A937299E4A0EAE4 /* Gateway */,
+				A876321BA7D4DA9C2EFEC1C8 /* Models */,
+				A9C7B8138F053CB303A1EE6A /* Theme */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		405A9B629A1E8AC7CA969C08 /* OpenClawIOSTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0D14089F59A5E30F2DC34D23 /* Build configuration list for PBXNativeTarget "OpenClawIOSTests" */;
+			buildPhases = (
+				4D900B03D1BF29029050C8E2 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				10F395EB105F3846F999BEE4 /* PBXTargetDependency */,
+			);
+			name = OpenClawIOSTests;
+			packageProductDependencies = (
+			);
+			productName = OpenClawIOSTests;
+			productReference = 9E04F1578037D18BA1DD96BB /* OpenClawIOSTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		8584BE555DB0E9B400C0C0B9 /* OpenClawIOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3BF7998034F04E2540FEBD49 /* Build configuration list for PBXNativeTarget "OpenClawIOS" */;
+			buildPhases = (
+				AC4588CC2D28B2AB7229CA67 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = OpenClawIOS;
+			packageProductDependencies = (
+			);
+			productName = OpenClawIOS;
+			productReference = 6E5956E03A802792F3F26874 /* OpenClawIOS.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		13FB9EAD9710C68792C112DB /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+				};
+			};
+			buildConfigurationList = 0A1F186EC0AC6D8FEEEB5963 /* Build configuration list for PBXProject "OpenClawIOS" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = EF2B664179DE73E93A568250;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = E97E0EFB18FBB3B6C1FC1230 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8584BE555DB0E9B400C0C0B9 /* OpenClawIOS */,
+				405A9B629A1E8AC7CA969C08 /* OpenClawIOSTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4D900B03D1BF29029050C8E2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D72AB553CA727642462557FC /* GatewayCredentialsStoreTests.swift in Sources */,
+				5216691517A992CBD2511F12 /* GatewayEndpointTests.swift in Sources */,
+				32B08A49953731C65C47C9D5 /* GatewayLiveOperatorServiceTests.swift in Sources */,
+				06E1117CCB6851C0FC4FFA0E /* GatewayOperatorStoreTests.swift in Sources */,
+				E85D015DB6C4112309F8D06B /* GatewaySessionDisplayTests.swift in Sources */,
+				0F6ED84308D1CA495CD5C620 /* RootTabTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AC4588CC2D28B2AB7229CA67 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3B47866F8B156645D8804A1F /* ActivityView.swift in Sources */,
+				3CECD9141D97FEA0D22E1A30 /* AggregateDiscoveryService.swift in Sources */,
+				F687FFA324CD4EA307926A59 /* AppSessionModel.swift in Sources */,
+				9EF7A44D44AA43D8C4CF4DED /* BonjourDiscoveryService.swift in Sources */,
+				0C6668CAC99E151044D39B8D /* ChannelsView.swift in Sources */,
+				68395C98DCDC41C4EC465E4E /* ChatView.swift in Sources */,
+				F11E7243BCEEDC29A96B4162 /* DebugView.swift in Sources */,
+				3358BBB6C7B00D7177BA19B7 /* DebugViewModel.swift in Sources */,
+				1A5709731451765740EF9546 /* DeviceService.swift in Sources */,
+				CFFCA6298BC2AC15BC0D5A84 /* DeviceView.swift in Sources */,
+				440470293A48272DEA8A9C2E /* GatewayChannel.swift in Sources */,
+				D1B9B0035F17126FCDB1FC6C /* GatewayCredentialsStore.swift in Sources */,
+				9854E6BB1B8392EC62FD4FCC /* GatewayDiscoveryService.swift in Sources */,
+				18A5F6E951146F64285B4DDC /* GatewayEndpoint.swift in Sources */,
+				26CBFDA684C3CB5FC8327D90 /* GatewayOperatorService.swift in Sources */,
+				130AFF870B917CD6E7A195B5 /* GatewayOperatorStore.swift in Sources */,
+				FDD792BA5F138A7B84AFD3CD /* GatewayRPCModels.swift in Sources */,
+				66E7104110105D0D395D3CDE /* GatewaySessionDisplay.swift in Sources */,
+				2A344ABE8F5C8E5A5F5E8A6A /* GatewayTransport.swift in Sources */,
+				BA0A887429D3C80FD056368E /* HomeView.swift in Sources */,
+				9D00C690534D83ABC28AD389 /* MockGatewayOperatorService.swift in Sources */,
+				5C56E76673FEC4663DB0B812 /* NodesView.swift in Sources */,
+				CC32DB68D098C80C0AA66704 /* OpenClawIOSApp.swift in Sources */,
+				352BACAA1B2CA726112BF25F /* OpenClawTheme.swift in Sources */,
+				78EF32D9B4D9941CB2CD5D94 /* RootTab.swift in Sources */,
+				86EAFAC5C7B73BE4A4D937B3 /* RootView.swift in Sources */,
+				80588D6CC78939BA9031EAD0 /* SettingsView.swift in Sources */,
+				47A6801A421EE8B4616C3362 /* TailscaleDiscoveryService.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		10F395EB105F3846F999BEE4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8584BE555DB0E9B400C0C0B9 /* OpenClawIOS */;
+			targetProxy = 6DDE53CA8B6BB807024BC8B3 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		08202DA7F45FACFE093C2108 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		1BE961BC51ECACCF37826E87 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OpenClawIOS.app/OpenClawIOS";
+			};
+			name = Release;
+		};
+		41C5A2389B6D8DF4961C7A1F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = ai.openclaw.ios.dashboard;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		5B60267CF13F1147F69DD439 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OpenClawIOS.app/OpenClawIOS";
+			};
+			name = Debug;
+		};
+		6A943BDBD425A9D86B66572D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = ai.openclaw.ios.dashboard;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		BE5D6159983BB338EA5F313C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0A1F186EC0AC6D8FEEEB5963 /* Build configuration list for PBXProject "OpenClawIOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				08202DA7F45FACFE093C2108 /* Debug */,
+				BE5D6159983BB338EA5F313C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		0D14089F59A5E30F2DC34D23 /* Build configuration list for PBXNativeTarget "OpenClawIOSTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5B60267CF13F1147F69DD439 /* Debug */,
+				1BE961BC51ECACCF37826E87 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		3BF7998034F04E2540FEBD49 /* Build configuration list for PBXNativeTarget "OpenClawIOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6A943BDBD425A9D86B66572D /* Debug */,
+				41C5A2389B6D8DF4961C7A1F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 13FB9EAD9710C68792C112DB /* Project object */;
+}

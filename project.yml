@@ -1,0 +1,34 @@
+name: OpenClawIOS
+options:
+  deploymentTarget:
+    iOS: "18.0"
+packages: {}
+targets:
+  OpenClawIOS:
+    type: application
+    platform: iOS
+    sources:
+      - OpenClawIOS
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: true
+        PRODUCT_BUNDLE_IDENTIFIER: ai.openclaw.ios.dashboard
+        INFOPLIST_KEY_UILaunchScreen_Generation: true
+  OpenClawIOSTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - OpenClawIOSTests
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: true
+    dependencies:
+      - target: OpenClawIOS
+schemes:
+  OpenClawIOS:
+    build:
+      targets:
+        OpenClawIOS: all
+    test:
+      targets:
+        - OpenClawIOSTests
