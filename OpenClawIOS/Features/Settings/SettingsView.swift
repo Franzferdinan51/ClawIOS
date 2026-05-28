@@ -12,138 +12,193 @@ struct SettingsView: View {
 
     var body: some View {
         Form {
-            Section("Gateway") {
-                TextField("http://127.0.0.1:18789", text: Bindable(self.sessionModel).gatewayEndpointInput)
-                    .textInputAutocapitalization(.never)
-                    .autocorrectionDisabled()
-
-                SecureField("Bearer token (optional)", text: Bindable(self.sessionModel).gatewayTokenInput)
-
-                LabeledContent("Status") {
-                    HStack(spacing: 6) {
-                        Circle()
-                            .fill(self.connectionColor)
-                            .frame(width: 8, height: 8)
-                        Text(self.statusText)
-                            .foregroundStyle(.secondary)
-                    }
-                }
-
-                Button("Connect") {
-                    Task {
-                        await self.connectGateway()
-                    }
-                }
-                .buttonStyle(.borderedProminent)
-            }
-
-            Section("Discovery") {
-                HStack(spacing: 12) {
-                    Button("Scan Local") {
-                        Task {
-                            await self.discoverEndpoints(source: "local")
-                        }
-                    }
-                    .buttonStyle(.bordered)
-                    .disabled(isDiscovering)
-
-                    Button("Scan Tailnet") {
-                        Task {
-                            await self.discoverEndpoints(source: "tailscale")
-                        }
-                    }
-                    .buttonStyle(.bordered)
-                    .disabled(isDiscovering || self.sessionModel.tailscaleApiKey.nilIfBlank == nil)
-                }
-
-                if isDiscovering {
-                    HStack {
-                        ProgressView()
-                            .scaleEffect(0.7)
-                        Text("Scanning...")
-                            .font(.footnote)
-                            .foregroundStyle(.secondary)
-                    }
-                }
-
-                if !discoveredEndpoints.isEmpty {
-                    ForEach(discoveredEndpoints, id: \.self) { endpoint in
-                        Button {
-                            self.sessionModel.gatewayEndpointInput = endpoint
-                        } label: {
-                            HStack {
-                                Image(systemName: discoverySource == "tailscale" ? "network" : "wifi")
-                                    .foregroundStyle(.secondary)
-                                Text(endpoint)
-                                    .font(.subheadline)
-                                    .foregroundStyle(.primary)
-                                Spacer()
-                                Image(systemName: "chevron.right")
-                                    .font(.caption)
-                                    .foregroundStyle(.tertiary)
-                            }
-                        }
-                        .buttonStyle(.plain)
-                    }
-                }
-            }
-
-            Section("Remote Access (Tailscale)") {
-                SecureField("Tailscale API key (tskey-koclat-...)", text: Bindable(self.sessionModel).tailscaleApiKey)
-                    .textInputAutocapitalization(.never)
-                    .autocorrectionDisabled()
-
-                Text("Get an API key from tailscale.com/settings/api. Required for remote gateway access when away from your local network.")
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
-            }
-
-            Section("About") {
-                LabeledContent("Connected to") {
-                    Text(self.sessionModel.gatewayEndpointInput)
-                        .font(.footnote)
-                        .foregroundStyle(.secondary)
-                        .lineLimit(1)
-                }
-
-                LabeledContent("App version") {
-                    Text("Phase 1")
-                        .foregroundStyle(.secondary)
-                }
-            }
+            gatewaySection
+            discoverySection
+            tailscaleSection
+            aboutSection
         }
         .navigationTitle(Self.screenTitle)
+        .navigationBarTitleDisplayMode(.large)
         .task {
             self.statusMessage = self.sessionModel.gatewayConnectionSummary
             self.loadSavedCredentialsIfAvailable()
         }
     }
 
+    // MARK: - Gateway Section
+
+    private var gatewaySection: some View {
+        Section {
+            TextField("http://127.0.0.1:18789", text: Bindable(self.sessionModel).gatewayEndpointInput)
+                .textInputAutocapitalization(.never)
+                .autocorrectionDisabled()
+                .keyboardType(.URL)
+
+            SecureField("Bearer token (optional)", text: Bindable(self.sessionModel).gatewayTokenInput)
+                .textInputAutocapitalization(.never)
+                .autocorrectionDisabled()
+
+            HStack {
+                Circle()
+                    .fill(self.connectionColor)
+                    .frame(width: 8, height: 8)
+                Text(self.statusText)
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+                Spacer()
+            }
+
+            Button {
+                Task { await self.connectGateway() }
+            } label: {
+                HStack {
+                    if self.gatewayStore.connectionState == .connecting {
+                        ProgressView()
+                            .scaleEffect(0.6)
+                    }
+                    Text(self.gatewayStore.connectionState == .connected ? "Reconnect" : "Connect")
+                }
+                .frame(maxWidth: .infinity)
+            }
+            .buttonStyle(.borderedProminent)
+            .tint(OpenClawTheme.primary)
+            .disabled(self.gatewayStore.connectionState == .connecting)
+        } header: {
+            Text("Gateway")
+        } footer: {
+            if let error = self.gatewayStore.lastErrorMessage {
+                Text(error)
+                    .foregroundStyle(.orange)
+                    .font(.caption)
+            }
+        }
+    }
+
+    // MARK: - Discovery Section
+
+    private var discoverySection: some View {
+        Section {
+            HStack(spacing: 12) {
+                Button {
+                    Task { await self.discoverEndpoints(source: "local") }
+                } label: {
+                    Label("Scan Local", systemImage: "wifi")
+                        .frame(maxWidth: .infinity)
+                }
+                .buttonStyle(.bordered)
+                .disabled(isDiscovering)
+
+                Button {
+                    Task { await self.discoverEndpoints(source: "tailscale") }
+                } label: {
+                    Label("Scan Tailnet", systemImage: "network")
+                        .frame(maxWidth: .infinity)
+                }
+                .buttonStyle(.bordered)
+                .disabled(isDiscovering || self.sessionModel.tailscaleApiKey.nilIfBlank == nil)
+            }
+
+            if isDiscovering {
+                HStack {
+                    ProgressView()
+                        .scaleEffect(0.6)
+                    Text("Scanning for gateways...")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+            }
+
+            ForEach(discoveredEndpoints, id: \.self) { endpoint in
+                Button {
+                    self.sessionModel.gatewayEndpointInput = endpoint
+                } label: {
+                    HStack {
+                        Image(systemName: discoverySource == "tailscale" ? "network" : "wifi")
+                            .foregroundStyle(OpenClawTheme.primary)
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text(endpoint)
+                                .font(.subheadline)
+                                .foregroundStyle(.primary)
+                            Text(discoverySource == "tailscale" ? "Tailscale" : "Local network")
+                                .font(.caption2)
+                                .foregroundStyle(.tertiary)
+                        }
+                        Spacer()
+                        Image(systemName: "arrow.right.circle.fill")
+                            .foregroundStyle(OpenClawTheme.primary)
+                    }
+                }
+                .buttonStyle(.plain)
+            }
+        } header: {
+            Text("Discovery")
+        } footer: {
+            Text("Scan Local uses Bonjour to find gateways on your network. Scan Tailnet uses Tailscale API to find gateways on your tailnet.")
+        }
+    }
+
+    // MARK: - Tailscale Section
+
+    private var tailscaleSection: some View {
+        Section {
+            SecureField("Tailscale API key (tskey-koclat-...)", text: Bindable(self.sessionModel).tailscaleApiKey)
+                .textInputAutocapitalization(.never)
+                .autocorrectionDisabled()
+        } header: {
+            Text("Remote Access")
+        } footer: {
+            Text("Get an API key from tailscale.com/settings/api. Required for remote gateway access when away from your local network.")
+        }
+    }
+
+    // MARK: - About Section
+
+    private var aboutSection: some View {
+        Section {
+            LabeledContent("App", value: "OpenClaw iOS")
+            LabeledContent("Version", value: "Phase 1")
+            LabeledContent("Connected to") {
+                Text(self.sessionModel.gatewayEndpointInput)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .lineLimit(1)
+            }
+            LabeledContent("Sessions") {
+                Text("\(self.gatewayStore.sessions.count)")
+                    .foregroundStyle(.secondary)
+            }
+            LabeledContent("Nodes") {
+                Text("\(self.gatewayStore.nodes.count)")
+                    .foregroundStyle(.secondary)
+            }
+        } header: {
+            Text("About")
+        }
+    }
+
+    // MARK: - Helpers
+
     private var connectionLabel: String {
         switch self.gatewayStore.connectionState {
-        case .disconnected:
-            return "Disconnected"
-        case .connecting:
-            return "Connecting"
-        case .connected:
-            return "Connected"
+        case .disconnected: return "Disconnected"
+        case .connecting: return "Connecting"
+        case .connected: return "Connected"
         }
     }
 
     private var connectionColor: Color {
         switch self.gatewayStore.connectionState {
-        case .disconnected:
-            return .gray
-        case .connecting:
-            return .yellow
-        case .connected:
-            return .green
+        case .disconnected: return .gray
+        case .connecting: return .yellow
+        case .connected: return .green
         }
     }
 
     private var statusText: String {
         self.statusMessage.isEmpty ? self.connectionLabel : self.statusMessage
     }
+
+    // MARK: - Actions
 
     private func discoverEndpoints(source: String) async {
         isDiscovering = true
@@ -172,12 +227,12 @@ struct SettingsView: View {
                 try self.sessionModel.credentialsStore.save(.token(trimmedToken), for: endpoint)
             }
 
-            self.statusMessage = "Connecting to \(endpoint.httpBaseURL.host ?? endpoint.httpBaseURL.absoluteString)"
+            self.statusMessage = "Connecting..."
             self.sessionModel.gatewayConnectionSummary = self.statusMessage
 
             try await self.gatewayStore.refreshDashboard()
 
-            self.statusMessage = "Connected to \(endpoint.httpBaseURL.host ?? endpoint.httpBaseURL.absoluteString)"
+            self.statusMessage = "Connected"
             self.sessionModel.gatewayConnectionSummary = self.statusMessage
         } catch {
             self.statusMessage = error.localizedDescription
@@ -195,9 +250,7 @@ struct SettingsView: View {
         }
 
         switch credentials {
-        case let .token(value):
-            self.sessionModel.gatewayTokenInput = value
-        case let .password(value):
+        case let .token(value), let .password(value):
             self.sessionModel.gatewayTokenInput = value
         }
     }

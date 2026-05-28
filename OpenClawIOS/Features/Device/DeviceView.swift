@@ -17,6 +17,7 @@ struct DeviceView: View {
                     cameraSection(svc)
                     locationSection(svc)
                 }
+                .listStyle(.insetGrouped)
             } else {
                 ProgressView()
                     .task {
@@ -26,52 +27,38 @@ struct DeviceView: View {
             }
         }
         .navigationTitle(Self.screenTitle)
+        .navigationBarTitleDisplayMode(.large)
     }
 
-    // MARK: - Sections
+    // MARK: - Node Status
 
     private func nodeStatusSection(_ svc: DeviceService) -> some View {
-        Section("Node Status") {
-            LabeledContent("Device") {
-                Text(UIDevice.current.name)
-            }
-            LabeledContent("Model") {
-                Text(UIDevice.current.model)
-            }
+        Section {
+            LabeledContent("Device", value: UIDevice.current.name)
+            LabeledContent("Model", value: UIDevice.current.model)
             LabeledContent("Registered as") {
-                let caps = svc.advertiseCapabilities()
-                Text(caps.isEmpty ? "Console only" : caps.joined(separator: ", "))
+                Text(svc.advertiseCapabilities().isEmpty ? "Console only" : svc.advertiseCapabilities().joined(separator: ", "))
                     .foregroundStyle(.secondary)
             }
-            LabeledContent("Gateway status") {
+            LabeledContent("Gateway") {
                 HStack(spacing: 6) {
                     Circle()
                         .fill(connectionColor)
-                        .frame(width: 8, height: 8)
+                        .frame(width: 7, height: 7)
                     Text(connectionLabel)
                         .font(.subheadline)
                 }
             }
+        } header: {
+            Text("Node Status")
         }
     }
 
+    // MARK: - Voice
+
     private func voiceSection(_ svc: DeviceService) -> some View {
-        Section("Voice") {
-            Toggle("Enable voice", isOn: Binding(
-                get: { svc.isVoiceEnabled },
-                set: { newValue in
-                    if newValue {
-                        Task {
-                            let granted = await svc.requestVoicePermission()
-                            if granted {
-                                try? svc.startListening()
-                            }
-                        }
-                    } else {
-                        svc.stopListening()
-                    }
-                }
-            ))
+        Section {
+            Toggle("Voice input", isOn: voiceToggleBinding(svc))
 
             if svc.isListening {
                 HStack {
@@ -79,22 +66,40 @@ struct DeviceView: View {
                         .font(.caption)
                         .foregroundStyle(.secondary)
                     Spacer()
-                    // Live audio level bar
                     AudioLevelBar(level: svc.audioLevel)
                 }
             }
 
-            Label("Wake word detection", systemImage: "waveform")
-                .foregroundStyle(.secondary)
-            Label("Voice playback", systemImage: "speaker.wave.3")
-                .foregroundStyle(.secondary)
-            Label("Talk mode (PTT)", systemImage: "mic.fill")
-                .foregroundStyle(.secondary)
+            capabilityLabel(icon: "waveform", text: "Wake word detection")
+            capabilityLabel(icon: "speaker.wave.3", text: "Voice playback")
+            capabilityLabel(icon: "mic.fill", text: "Talk mode (PTT)")
+        } header: {
+            Text("Voice")
         }
     }
 
+    private func voiceToggleBinding(_ svc: DeviceService) -> Binding<Bool> {
+        Binding(
+            get: { svc.isVoiceEnabled },
+            set: { newValue in
+                if newValue {
+                    Task {
+                        let granted = await svc.requestVoicePermission()
+                        if granted {
+                            try? svc.startListening()
+                        }
+                    }
+                } else {
+                    svc.stopListening()
+                }
+            }
+        )
+    }
+
+    // MARK: - Canvas
+
     private func canvasSection(_ svc: DeviceService) -> some View {
-        Section("Canvas") {
+        Section {
             Toggle("Canvas preview", isOn: Binding(
                 get: { svc.isCanvasActive },
                 set: { svc.isCanvasActive = $0 }
@@ -106,45 +111,47 @@ struct DeviceView: View {
                     .clipShape(RoundedRectangle(cornerRadius: 12))
             }
 
-            Label("Live Canvas rendering", systemImage: "paintbrush")
-                .foregroundStyle(.secondary)
-            Label("Canvas snapshot handoff", systemImage: "photo")
-                .foregroundStyle(.secondary)
+            capabilityLabel(icon: "paintbrush", text: "Live Canvas rendering")
+            capabilityLabel(icon: "photo", text: "Canvas snapshot handoff")
+        } header: {
+            Text("Canvas")
         }
     }
 
+    // MARK: - Camera
+
     private func cameraSection(_ svc: DeviceService) -> some View {
-        Section("Camera") {
+        Section {
             Toggle("Camera access", isOn: Binding(
                 get: { svc.cameraAuthorized },
                 set: { _ in
-                    Task {
-                        _ = await svc.requestCameraPermission()
-                    }
+                    Task { _ = await svc.requestCameraPermission() }
                 }
             ))
 
-            if svc.cameraAuthorized {
-                if let image = svc.lastCapturedImage {
-                    Image(uiImage: image)
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(height: 150)
-                        .clipShape(RoundedRectangle(cornerRadius: 12))
-                }
+            if svc.cameraAuthorized, let image = svc.lastCapturedImage {
+                Image(uiImage: image)
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(height: 150)
+                    .clipShape(RoundedRectangle(cornerRadius: 12))
+
                 Button("Take snapshot") {
-                    // TODO: capture image
+                    // TODO: implement capture
                 }
                 .buttonStyle(.bordered)
             }
 
-            Label("Camera handoff to agent", systemImage: "camera")
-                .foregroundStyle(.secondary)
+            capabilityLabel(icon: "camera", text: "Camera handoff to agent")
+        } header: {
+            Text("Camera")
         }
     }
 
+    // MARK: - Location
+
     private func locationSection(_ svc: DeviceService) -> some View {
-        Section("Location") {
+        Section {
             Toggle("Location access", isOn: Binding(
                 get: { svc.locationAuthorized },
                 set: { _ in svc.requestLocationPermission() }
@@ -153,17 +160,24 @@ struct DeviceView: View {
             if svc.locationAuthorized, let loc = svc.currentLocation {
                 LabeledContent("Last location") {
                     Text(String(format: "%.4f, %.4f", loc.coordinate.latitude, loc.coordinate.longitude))
-                        .font(.caption.monospaced())
+                        .font(.system(.caption, design: .monospaced))
                         .foregroundStyle(.secondary)
                 }
             }
 
-            Label("Location context for agent", systemImage: "location")
-                .foregroundStyle(.secondary)
+            capabilityLabel(icon: "location", text: "Location context for agent")
+        } header: {
+            Text("Location")
         }
     }
 
     // MARK: - Helpers
+
+    private func capabilityLabel(icon: String, text: String) -> some View {
+        Label(text, systemImage: icon)
+            .font(.caption)
+            .foregroundStyle(.tertiary)
+    }
 
     private var connectionLabel: String {
         switch gatewayStore.connectionState {
