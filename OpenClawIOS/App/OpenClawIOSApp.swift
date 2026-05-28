@@ -8,12 +8,13 @@ struct OpenClawIOSApp: App {
 
     init() {
         let sessionModel = AppSessionModel()
-        let gatewayStore = GatewayOperatorStore(
-            service: LiveGatewayOperatorService(
-                transport: GatewayWebSocketTransport(),
-                configurationProvider: {
-                    try sessionModel.currentGatewayConfiguration()
-                }))
+        let transport = GatewayWebSocketTransport()
+        let service = LiveGatewayOperatorService(
+            transport: transport,
+            configurationProvider: {
+                try sessionModel.currentGatewayConfiguration()
+            })
+        let gatewayStore = GatewayOperatorStore(service: service, transport: transport)
         self._sessionModel = State(initialValue: sessionModel)
         self._gatewayStore = State(initialValue: gatewayStore)
     }
