@@ -50,7 +50,7 @@ project.yml           # XcodeGen config
 
 ## Tab Order (RootTab)
 
-`home → chat → nodes → device → channels → activity → settings`
+`home → chat → nodes → device → channels → activity → debug → settings`
 
 ## Discovery Services
 
