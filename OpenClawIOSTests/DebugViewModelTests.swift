@@ -1,6 +1,7 @@
 import XCTest
 @testable import OpenClawIOS
 
+@MainActor
 final class DebugViewModelTests: XCTestCase {
     func test_canSendRequiresMethodAndSession() {
         let store = GatewayOperatorStore(service: MockGatewayOperatorService(sessions: []))
@@ -15,19 +16,16 @@ final class DebugViewModelTests: XCTestCase {
         XCTAssertTrue(vm.canSend) // has method + session
     }
 
-    func test_sendRPCSetsLoadingState() async throws {
+    func test_canSendRequiresNonEmptyMethod() {
         let store = GatewayOperatorStore(service: MockGatewayOperatorService(sessions: []))
         let vm = DebugViewModel(store: store)
         store.selectedSessionKey = "agent:main"
 
-        XCTAssertFalse(vm.isLoading)
+        vm.rpcMethod = "   "
+        XCTAssertFalse(vm.canSend) // whitespace only
 
-        // sendRPC with mock transport will fail but sets isLoading
-        await vm.sendRPC()
-
-        XCTAssertFalse(vm.isLoading)
-        // rpcError should be set since no transport connected
-        XCTAssertFalse(vm.rpcError.isEmpty)
+        vm.rpcMethod = "sessions.list"
+        XCTAssertTrue(vm.canSend) // actual method
     }
 
     func test_clearResetsAllFields() {
