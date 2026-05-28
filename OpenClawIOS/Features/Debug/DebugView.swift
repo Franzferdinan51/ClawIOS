@@ -4,204 +4,307 @@ struct DebugView: View {
     static let screenTitle = "Debug"
 
     @Environment(GatewayOperatorStore.self) private var gatewayStore
-    @State private var viewModel: DebugViewModel?
+    @State private var selectedSection = 0
 
     var body: some View {
-        Group {
-            if let vm = viewModel {
-                ScrollView {
-                    VStack(alignment: .leading, spacing: 20) {
-                        rpcTesterCard(vm: vm)
-                        eventLogCard
-                        healthCard
-                    }
-                    .padding()
-                }
-            } else {
-                ProgressView()
+        VStack(spacing: 0) {
+            Picker("Section", selection: $selectedSection) {
+                Text("RPC").tag(0)
+                Text("Events").tag(1)
+                Text("Health").tag(2)
+            }
+            .pickerStyle(.segmented)
+            .padding()
+
+            switch selectedSection {
+            case 0: rpcTesterSection
+            case 1: eventLogSection
+            case 2: healthSection
+            default: rpcTesterSection
             }
         }
         .navigationTitle(Self.screenTitle)
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                Menu {
-                    Button("Clear log") {
-                        gatewayStore.clearEventLog()
-                    }
-                    Button("Copy Gateway ID") {
-                        // TODO: copy device ID
-                    }
-                } label: {
-                    Image(systemName: "ellipsis.circle")
+        .navigationBarTitleDisplayMode(.large)
+    }
+
+    // MARK: - RPC Tester
+
+    private var rpcTesterSection: some View {
+        VStack(spacing: 0) {
+            let vm = DebugViewModel(store: gatewayStore)
+
+            ScrollView {
+                VStack(spacing: 16) {
+                    methodInputSection(vm)
+                    paramsInputSection(vm)
+                    actionButtons(vm)
+                    resultSection(vm)
                 }
-            }
-        }
-        .task {
-            if viewModel == nil {
-                viewModel = DebugViewModel(store: gatewayStore)
+                .padding()
             }
         }
     }
 
-    private func rpcTesterCard(vm: DebugViewModel) -> some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Label("RPC Tester", systemImage: "terminal")
+    private func methodInputSection(_ vm: DebugViewModel) -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Label("Method", systemImage: "terminal")
                 .font(.headline)
 
-            TextField("Method (e.g. sessions.list)", text: Bindable(vm).rpcMethod)
-                .textFieldStyle(.roundedBorder)
-                .textInputAutocapitalization(.never)
-                .autocorrectionDisabled()
+            TextField("sessions.list", text: Binding(
+                get: { vm.rpcMethod },
+                set: { vm.rpcMethod = $0 }
+            ))
+            .textFieldStyle(.roundedBorder)
+            .textInputAutocapitalization(.never)
+            .autocorrectionDisabled()
+            .font(.system(.body, design: .monospaced))
+        }
+    }
 
-            TextField("Params JSON", text: Bindable(vm).rpcParams, axis: .vertical)
-                .textFieldStyle(.roundedBorder)
-                .font(.system(.footnote, design: .monospaced))
-                .lineLimit(3...6)
-                .textInputAutocapitalization(.never)
-                .autocorrectionDisabled()
+    private func paramsInputSection(_ vm: DebugViewModel) -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Parameters (JSON)")
+                .font(.subheadline.weight(.medium))
 
-            HStack {
-                Button("Send") {
-                    Task { await vm.sendRPC() }
-                }
-                .buttonStyle(.borderedProminent)
-                .disabled(!vm.canSend || vm.isLoading)
+            TextEditor(text: Binding(
+                get: { vm.rpcParams },
+                set: { vm.rpcParams = $0 }
+            ))
+            .font(.system(.caption, design: .monospaced))
+            .frame(minHeight: 80)
+            .overlay(
+                RoundedRectangle(cornerRadius: 8)
+                    .stroke(Color(.tertiarySystemBackground), lineWidth: 1)
+            )
+        }
+    }
 
-                Button("Clear") { vm.clear() }
-                    .buttonStyle(.bordered)
-            }
-
-            if vm.isLoading {
+    private func actionButtons(_ vm: DebugViewModel) -> some View {
+        HStack(spacing: 12) {
+            Button {
+                Task { await vm.sendRPC() }
+            } label: {
                 HStack {
-                    ProgressView()
-                        .scaleEffect(0.7)
-                    Text("Sending...")
-                        .font(.footnote)
-                        .foregroundStyle(.secondary)
+                    if vm.isLoading {
+                        ProgressView()
+                            .scaleEffect(0.6)
+                    }
+                    Text("Send")
                 }
+                .frame(maxWidth: .infinity)
             }
+            .buttonStyle(.borderedProminent)
+            .tint(OpenClawTheme.primary)
+            .disabled(!vm.canSend || vm.isLoading)
 
-            if !vm.rpcError.nilIfBlank.isEmpty {
+            Button {
+                vm.clear()
+            } label: {
+                Text("Clear")
+                    .frame(maxWidth: .infinity)
+            }
+            .buttonStyle(.bordered)
+        }
+    }
+
+    private func resultSection(_ vm: DebugViewModel) -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            if !vm.rpcError.isEmpty {
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("Error")
-                        .font(.caption.weight(.semibold))
-                        .foregroundStyle(.red)
+                    HStack {
+                        Image(systemName: "exclamationmark.triangle.fill")
+                            .foregroundStyle(.red)
+                        Text("Error")
+                            .font(.caption.weight(.bold))
+                            .foregroundStyle(.red)
+                    }
                     Text(vm.rpcError)
                         .font(.system(.caption, design: .monospaced))
                         .foregroundStyle(.red)
-                }
-                .padding(10)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .background(Color.red.opacity(0.08), in: RoundedRectangle(cornerRadius: 10))
-            }
-
-            if !vm.rpcResult.nilIfBlank.isEmpty {
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("Result")
-                        .font(.caption.weight(.semibold))
-                        .foregroundStyle(.secondary)
-                    Text(vm.rpcResult)
-                        .font(.system(.caption, design: .monospaced))
-                        .foregroundStyle(.primary)
                         .textSelection(.enabled)
                 }
-                .padding(10)
+                .padding(12)
                 .frame(maxWidth: .infinity, alignment: .leading)
+                .background(Color.red.opacity(0.06), in: RoundedRectangle(cornerRadius: 10))
+            }
+
+            if !vm.rpcResult.isEmpty {
+                VStack(alignment: .leading, spacing: 4) {
+                    HStack {
+                        Image(systemName: "checkmark.circle.fill")
+                            .foregroundStyle(.green)
+                        Text("Result")
+                            .font(.caption.weight(.bold))
+                            .foregroundStyle(.secondary)
+                        Spacer()
+                        Button {
+                            UIPasteboard.general.string = vm.rpcResult
+                        } label: {
+                            Image(systemName: "doc.on.doc")
+                                .font(.caption)
+                        }
+                    }
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        Text(vm.rpcResult)
+                            .font(.system(.caption, design: .monospaced))
+                            .foregroundStyle(.primary)
+                            .textSelection(.enabled)
+                    }
+                }
+                .padding(12)
                 .background(Color(.secondarySystemBackground), in: RoundedRectangle(cornerRadius: 10))
             }
         }
-        .padding()
-        .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
     }
 
-    private var eventLogCard: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            HStack {
-                Label("Event Log", systemImage: "list.bullet.rectangle")
-                    .font(.headline)
-                Spacer()
-                Text("\(gatewayStore.eventLog.count) events")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-            }
+    // MARK: - Event Log
 
+    private var eventLogSection: some View {
+        Group {
             if gatewayStore.eventLog.isEmpty {
-                Text("No events recorded. Events appear here when the agent is running.")
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
+                ContentUnavailableView {
+                    Label("No Events", systemImage: "list.bullet.rectangle")
+                } description: {
+                    Text("Events appear here when the agent is running.")
+                }
             } else {
-                ForEach(gatewayStore.eventLog.reversed()) { event in
-                    VStack(alignment: .leading, spacing: 4) {
-                        HStack {
-                            Text(event.type)
-                                .font(.caption.weight(.semibold))
-                                .foregroundStyle(eventColor(for: event.type))
-                            Spacer()
-                            Text(event.timestamp, style: .time)
-                                .font(.caption2)
-                                .foregroundStyle(.tertiary)
+                ScrollView {
+                    LazyVStack(spacing: 10) {
+                        ForEach(gatewayStore.eventLog.reversed()) { event in
+                            ActivityEventRow(event: event)
                         }
-                        Text(event.message)
-                            .font(.system(.caption, design: .monospaced))
-                            .foregroundStyle(.secondary)
-                            .lineLimit(3)
                     }
-                    .padding(8)
-                    .background(Color(.secondarySystemBackground), in: RoundedRectangle(cornerRadius: 8))
+                    .padding()
                 }
             }
         }
-        .padding()
-        .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
     }
 
-    private var healthCard: some View {
+    // MARK: - Health
+
+    private var healthSection: some View {
+        ScrollView {
+            VStack(spacing: 16) {
+                connectionCard
+                statsCard
+                sessionCard
+                errorCard
+            }
+            .padding()
+        }
+    }
+
+    private var connectionCard: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Label("Gateway Health", systemImage: "heart.fill")
+            Label("Connection", systemImage: "link")
                 .font(.headline)
 
-            HStack(spacing: 16) {
-                VStack(alignment: .leading) {
-                    Text("Connection")
+            HStack {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Status")
                         .font(.caption)
                         .foregroundStyle(.secondary)
-                    HStack(spacing: 6) {
+                    HStack(spacing: 8) {
                         Circle()
                             .fill(connectionColor)
-                            .frame(width: 8, height: 8)
+                            .frame(width: 10, height: 10)
                         Text(connectionLabel)
-                            .font(.subheadline.weight(.medium))
+                            .font(.subheadline.weight(.semibold))
                     }
-                }
-
-                VStack(alignment: .leading) {
-                    Text("Sessions")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                    Text("\(gatewayStore.sessions.count)")
-                        .font(.subheadline.weight(.medium))
-                }
-
-                VStack(alignment: .leading) {
-                    Text("Nodes")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                    Text("\(gatewayStore.nodes.count)")
-                        .font(.subheadline.weight(.medium))
                 }
 
                 Spacer()
             }
+        }
+        .padding(16)
+        .background(Color(.secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+    }
 
-            if let error = gatewayStore.lastErrorMessage {
-                Text("Last error: \(error)")
-                    .font(.caption)
-                    .foregroundStyle(.orange)
+    private var statsCard: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Label("Statistics", systemImage: "chart.bar.fill")
+                .font(.headline)
+
+            HStack(spacing: 20) {
+                statItem(value: "\(gatewayStore.sessions.count)", label: "Sessions")
+                statItem(value: "\(gatewayStore.nodes.count)", label: "Nodes")
+                statItem(value: "\(gatewayStore.channels.count)", label: "Channels")
+                statItem(value: "\(gatewayStore.eventLog.count)", label: "Events")
             }
         }
-        .padding()
-        .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+        .padding(16)
+        .background(Color(.secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 16, style: .continuous))
     }
+
+    private func statItem(value: String, label: String) -> some View {
+        VStack(spacing: 4) {
+            Text(value)
+                .font(.system(size: 22, weight: .bold, design: .rounded))
+                .foregroundStyle(OpenClawTheme.primary)
+            Text(label)
+                .font(.caption)
+                .foregroundStyle(.secondary)
+        }
+        .frame(maxWidth: .infinity)
+    }
+
+    private var sessionCard: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Label("Active Session", systemImage: "bubble.left.and.bubble.right.fill")
+                .font(.headline)
+
+            if let selectedKey = gatewayStore.selectedSessionKey {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Key")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                    Text(selectedKey)
+                        .font(.system(.caption, design: .monospaced))
+                        .foregroundStyle(.primary)
+                }
+
+                Divider()
+
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Messages")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                    Text("\(gatewayStore.transcript.count)")
+                        .font(.subheadline)
+                }
+            } else {
+                Text("No active session")
+                    .font(.caption)
+                    .foregroundStyle(.tertiary)
+                    .italic()
+            }
+        }
+        .padding(16)
+        .background(Color(.secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+    }
+
+    @ViewBuilder
+    private var errorCard: some View {
+        if let error = gatewayStore.lastErrorMessage {
+            VStack(alignment: .leading, spacing: 8) {
+                HStack {
+                    Image(systemName: "exclamationmark.triangle.fill")
+                        .foregroundStyle(.orange)
+                    Label("Last Error", systemImage: "exclamationmark.triangle")
+                        .font(.headline)
+                        .foregroundStyle(.orange)
+                }
+                Text(error)
+                    .font(.system(.caption, design: .monospaced))
+                    .foregroundStyle(.orange)
+                    .textSelection(.enabled)
+            }
+            .padding(16)
+            .background(Color.orange.opacity(0.08), in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+        }
+    }
+
+    // MARK: - Helpers
 
     private var connectionLabel: String {
         switch gatewayStore.connectionState {
@@ -217,21 +320,5 @@ struct DebugView: View {
         case .connecting: return .yellow
         case .connected: return .green
         }
-    }
-
-    private func eventColor(for type: String) -> Color {
-        switch type.lowercased() {
-        case "error": return .red
-        case "tool": return .blue
-        case "thinking": return .purple
-        case "message": return .green
-        default: return .secondary
-        }
-    }
-}
-
-private extension String {
-    var nilIfBlank: String {
-        trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? "" : self
     }
 }
