@@ -177,6 +177,10 @@ final class GatewayOperatorStore {
         }
     }
 
+    func clearError() {
+        self.lastErrorMessage = nil
+    }
+
     func clearEventLog() {
         self.eventLog.removeAll()
     }
