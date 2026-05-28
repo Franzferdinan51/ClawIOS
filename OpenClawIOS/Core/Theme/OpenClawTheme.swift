@@ -1,48 +1,61 @@
 import SwiftUI
 
 /// Shared color palette matching the OpenClaw web dashboard design system.
-/// Based on the claw-orange primary (#f97316) with dark slate backgrounds
-/// for the native iOS context.
+/// OpenClaw brand: claw-orange (#f97316) with deep dark backgrounds for native iOS context.
 enum OpenClawTheme {
     // MARK: - Brand
 
-    static let primary = Color(hex: "f97316")       // claw-orange
-    static let primaryHover = Color(hex: "ea580c")
-    static let accent = Color(hex: "fb923c")        // lighter orange
+    static let primary = Color(hex: "f97316")       // claw-orange brand color
+    static let primaryHover = Color(hex: "fb923c")
+    static let accent = Color(hex: "14b8a6")        // teal accent
 
     // MARK: - App Identity
 
     static let appName = "OpenClaw"
     static let appVersion = "Phase 1"
 
-    // MARK: - Backgrounds
+    // MARK: - Backgrounds (dark mode)
 
-    static let background = Color(hex: "0f172a")    // slate-900 (dark mode base)
-    static let surface = Color(hex: "1e293b")       // slate-800
-    static let surfaceElevated = Color(hex: "334155") // slate-700
+    static let background = Color(hex: "0e1015")    // deep dark
+    static let surface = Color(hex: "161920")       // card surface
+    static let surfaceElevated = Color(hex: "191c24") // elevated
 
     // MARK: - Text
 
-    static let textPrimary = Color(hex: "f8fafc")   // slate-50
-    static let textSecondary = Color(hex: "94a3b8") // slate-400
-    static let textMuted = Color(hex: "64748b")     // slate-500
+    static let textPrimary = Color(hex: "d4d4d8")   // slate-300
+    static let textSecondary = Color(hex: "f4f4f5") // slate-50
+    static let textMuted = Color(hex: "838387")     // muted
 
     // MARK: - Status
 
     static let success = Color(hex: "22c55e")       // green-500
-    static let warning = Color(hex: "eab308")      // yellow-500
+    static let warning = Color(hex: "f59e0b")      // amber-500
     static let error = Color(hex: "ef4444")        // red-500
     static let info = Color(hex: "3b82f6")         // blue-500
 
     // MARK: - Border
 
-    static let border = Color(hex: "334155")        // slate-700
-    static let borderLight = Color(hex: "475569")  // slate-600
+    static let border = Color(hex: "1e2028")        // whisper-thin
+    static let borderLight = Color(hex: "2e3040")  // border-strong
 
     // MARK: - Chat bubbles
 
     static let userBubble = Color(hex: "f97316").opacity(0.15)
-    static let agentBubble = Color(hex: "1e293b")
+    static let agentBubble = Color(hex: "161920")
+
+    // MARK: - Shadows
+
+    static let shadowSm = Color(hex: "000000").opacity(0.25)
+    static let shadowMd = Color(hex: "000000").opacity(0.3)
+    static let shadowLg = Color(hex: "000000").opacity(0.4)
+
+    // MARK: - Gradient
+
+    static let primaryGradient = LinearGradient(
+        colors: [Color(hex: "f97316"), Color(hex: "ea580c")],
+        startPoint: .topLeading,
+        endPoint: .bottomTrailing
+    )
 }
 
 extension Color {
@@ -91,6 +104,11 @@ extension OpenClawTheme {
     /// Rounded card modifier with OpenClaw surface color.
     static func cardModifier() -> some ViewModifier {
         CardModifier()
+    }
+
+    /// Returns an orange-tinted tint color for interactive elements.
+    static func tinted(_ scheme: ColorScheme) -> Color {
+        scheme == .dark ? primary : Color(hex: "ea580c")
     }
 }
 

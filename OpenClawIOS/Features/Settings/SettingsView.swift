@@ -5,6 +5,7 @@ struct SettingsView: View {
 
     @Environment(AppSessionModel.self) private var sessionModel
     @Environment(GatewayOperatorStore.self) private var gatewayStore
+
     @State private var statusMessage = ""
     @State private var discoveredEndpoints: [String] = []
     @State private var isDiscovering = false
@@ -12,7 +13,8 @@ struct SettingsView: View {
 
     var body: some View {
         Form {
-            gatewaySection
+            savedConnectionsSection
+            connectionStatusSection
             discoverySection
             tailscaleSection
             aboutSection
@@ -25,19 +27,32 @@ struct SettingsView: View {
         }
     }
 
-    // MARK: - Gateway Section
+    // MARK: - Saved Connections Section
 
-    private var gatewaySection: some View {
+    private var savedConnectionsSection: some View {
         Section {
-            TextField("http://127.0.0.1:18789", text: Bindable(self.sessionModel).gatewayEndpointInput)
-                .textInputAutocapitalization(.never)
-                .autocorrectionDisabled()
-                .keyboardType(.URL)
+            NavigationLink {
+                SavedConnectionsView()
+            } label: {
+                HStack {
+                    Image(systemName: "network")
+                        .foregroundStyle(OpenClawTheme.primary)
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("Saved Connections")
+                            .font(.subheadline)
+                        Text("\(sessionModel.connectionStore.savedConnections.count) saved")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                }
+            }
+        }
+    }
 
-            SecureField("Bearer token (optional)", text: Bindable(self.sessionModel).gatewayTokenInput)
-                .textInputAutocapitalization(.never)
-                .autocorrectionDisabled()
+    // MARK: - Connection Status Section
 
+    private var connectionStatusSection: some View {
+        Section {
             HStack {
                 Circle()
                     .fill(self.connectionColor)
@@ -48,23 +63,31 @@ struct SettingsView: View {
                 Spacer()
             }
 
-            Button {
-                Task { await self.connectGateway() }
-            } label: {
-                HStack {
+            HStack {
+                TextField("http://127.0.0.1:18789", text: Bindable(self.sessionModel).gatewayEndpointInput)
+                    .textInputAutocapitalization(.never)
+                    .autocorrectionDisabled()
+                    .keyboardType(.URL)
+
+                Button {
+                    Task { await self.connectGateway() }
+                } label: {
                     if self.gatewayStore.connectionState == .connecting {
                         ProgressView()
                             .scaleEffect(0.6)
+                    } else {
+                        Image(systemName: "arrow.clockwise")
                     }
-                    Text(self.gatewayStore.connectionState == .connected ? "Reconnect" : "Connect")
                 }
-                .frame(maxWidth: .infinity)
+                .buttonStyle(.bordered)
+                .disabled(self.gatewayStore.connectionState == .connecting)
             }
-            .buttonStyle(.borderedProminent)
-            .tint(OpenClawTheme.primary)
-            .disabled(self.gatewayStore.connectionState == .connecting)
+
+            SecureField("Bearer token (optional)", text: Bindable(self.sessionModel).gatewayTokenInput)
+                .textInputAutocapitalization(.never)
+                .autocorrectionDisabled()
         } header: {
-            Text("Gateway")
+            Text("Current Connection")
         } footer: {
             if let error = self.gatewayStore.lastErrorMessage {
                 Text(error)
@@ -157,12 +180,6 @@ struct SettingsView: View {
         Section {
             LabeledContent("App", value: "OpenClaw iOS")
             LabeledContent("Version", value: "Phase 1")
-            LabeledContent("Connected to") {
-                Text(self.sessionModel.gatewayEndpointInput)
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-                    .lineLimit(1)
-            }
             LabeledContent("Sessions") {
                 Text("\(self.gatewayStore.sessions.count)")
                     .foregroundStyle(.secondary)

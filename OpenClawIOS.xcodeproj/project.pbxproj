@@ -13,6 +13,7 @@
 		130AFF870B917CD6E7A195B5 /* GatewayOperatorStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F2172215DA6B02C45049F5 /* GatewayOperatorStore.swift */; };
 		18A5F6E951146F64285B4DDC /* GatewayEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18FD05CA830973120D88D13 /* GatewayEndpoint.swift */; };
 		1A5709731451765740EF9546 /* DeviceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7173950FB7A8C4D64B52AA0A /* DeviceService.swift */; };
+		219C6DE3B972FFA9CA0F2937 /* GatewayConnectionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D220BD3DA6037835E1133E7 /* GatewayConnectionStore.swift */; };
 		26CBFDA684C3CB5FC8327D90 /* GatewayOperatorService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A793868407126126B1FA396 /* GatewayOperatorService.swift */; };
 		2A344ABE8F5C8E5A5F5E8A6A /* GatewayTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3390A0D1C328C372F62C638 /* GatewayTransport.swift */; };
 		32B08A49953731C65C47C9D5 /* GatewayLiveOperatorServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A58A99962E55E5CF5E39B7E /* GatewayLiveOperatorServiceTests.swift */; };
@@ -36,15 +37,18 @@
 		9EF7A44D44AA43D8C4CF4DED /* BonjourDiscoveryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C09263FDC595D6C0186CAD1 /* BonjourDiscoveryService.swift */; };
 		AAFA719FD6CAD25524B7D7D3 /* DebugViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D627E7D522B33E2FEA1031A8 /* DebugViewModelTests.swift */; };
 		BA0A887429D3C80FD056368E /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A8157C9686DC3142258342 /* HomeView.swift */; };
+		C6D4029B1A30CF99C2C3A423 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A36F5F4482DAA8F663F7AE /* OnboardingView.swift */; };
 		CC32DB68D098C80C0AA66704 /* OpenClawIOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6475A243E7883F749C28A1B0 /* OpenClawIOSApp.swift */; };
 		CFFCA6298BC2AC15BC0D5A84 /* DeviceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E176372CB8BAF8C01A4FA91 /* DeviceView.swift */; };
 		D1B9B0035F17126FCDB1FC6C /* GatewayCredentialsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8522E405FD455CBEAA8FEB /* GatewayCredentialsStore.swift */; };
 		D72AB553CA727642462557FC /* GatewayCredentialsStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A53A01BD4D2998AE1F2461 /* GatewayCredentialsStoreTests.swift */; };
 		DDE24619519FF377AAD579C0 /* GatewayEventTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF69D295EF7A6E3EE7C1F97 /* GatewayEventTests.swift */; };
 		E85D015DB6C4112309F8D06B /* GatewaySessionDisplayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 915A7C64E1BE9FFB5281E1A3 /* GatewaySessionDisplayTests.swift */; };
+		E88463AC679CC85CD5EB8DB3 /* SavedConnectionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3D9067726587C1497F9135E /* SavedConnectionsView.swift */; };
 		F11E7243BCEEDC29A96B4162 /* DebugView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A884DDF67885F03B9117DDB /* DebugView.swift */; };
 		F687FFA324CD4EA307926A59 /* AppSessionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E7E15895AE8BFC53A0322BC /* AppSessionModel.swift */; };
 		FDD792BA5F138A7B84AFD3CD /* GatewayRPCModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E250C461F62D8E85A4EB4C5 /* GatewayRPCModels.swift */; };
+		FF42B49CF0038E2073DBC1F9 /* SavedGateway.swift in Sources */ = {isa = PBXBuildFile; fileRef = B467E4F4F8BB306A046603BD /* SavedGateway.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,10 +64,12 @@
 /* Begin PBXFileReference section */
 		044A9C9FDA5BB93CA845080D /* RootTabTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootTabTests.swift; sourceTree = "<group>"; };
 		1C09263FDC595D6C0186CAD1 /* BonjourDiscoveryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonjourDiscoveryService.swift; sourceTree = "<group>"; };
+		1D220BD3DA6037835E1133E7 /* GatewayConnectionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatewayConnectionStore.swift; sourceTree = "<group>"; };
 		1E8DB5CB9FC81E42D784A67B /* OpenClawTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenClawTheme.swift; sourceTree = "<group>"; };
 		26F9B76FA2D536AC534547E2 /* AggregateDiscoveryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AggregateDiscoveryService.swift; sourceTree = "<group>"; };
 		3A58A99962E55E5CF5E39B7E /* GatewayLiveOperatorServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatewayLiveOperatorServiceTests.swift; sourceTree = "<group>"; };
 		3E598FE6BF7FB6EABECD3BBB /* DebugViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugViewModel.swift; sourceTree = "<group>"; };
+		47A36F5F4482DAA8F663F7AE /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		49C705B70239BDC841C82F43 /* ChannelsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelsView.swift; sourceTree = "<group>"; };
 		4A793868407126126B1FA396 /* GatewayOperatorService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatewayOperatorService.swift; sourceTree = "<group>"; };
 		5A884DDF67885F03B9117DDB /* DebugView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugView.swift; sourceTree = "<group>"; };
@@ -84,6 +90,7 @@
 		9E176372CB8BAF8C01A4FA91 /* DeviceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceView.swift; sourceTree = "<group>"; };
 		A18FD05CA830973120D88D13 /* GatewayEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatewayEndpoint.swift; sourceTree = "<group>"; };
 		A60D6CEF8CA92E6AE71D2AF8 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
+		B467E4F4F8BB306A046603BD /* SavedGateway.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedGateway.swift; sourceTree = "<group>"; };
 		BADF2D4A270449767D5B1217 /* RootTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootTab.swift; sourceTree = "<group>"; };
 		C9C23DDADCCE756227CEDC0A /* AppSessionModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSessionModelTests.swift; sourceTree = "<group>"; };
 		CD23D8667BFDC912750743B1 /* GatewayOperatorStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatewayOperatorStoreTests.swift; sourceTree = "<group>"; };
@@ -93,6 +100,7 @@
 		DB73846B85798989DBC59DA0 /* TailscaleDiscoveryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TailscaleDiscoveryService.swift; sourceTree = "<group>"; };
 		DF884FCEECB27188926940BE /* ActivityViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityViewTests.swift; sourceTree = "<group>"; };
 		E1F2172215DA6B02C45049F5 /* GatewayOperatorStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatewayOperatorStore.swift; sourceTree = "<group>"; };
+		E3D9067726587C1497F9135E /* SavedConnectionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedConnectionsView.swift; sourceTree = "<group>"; };
 		E53DF32FDBA242D6D0AB0FEC /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		E77EE868FB2BB6DEFF394A33 /* GatewaySessionDisplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatewaySessionDisplay.swift; sourceTree = "<group>"; };
 		F3390A0D1C328C372F62C638 /* GatewayTransport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatewayTransport.swift; sourceTree = "<group>"; };
@@ -109,6 +117,14 @@
 				E53DF32FDBA242D6D0AB0FEC /* RootView.swift */,
 			);
 			path = App;
+			sourceTree = "<group>";
+		};
+		12623F13BD25D217CC6F7718 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				47A36F5F4482DAA8F663F7AE /* OnboardingView.swift */,
+			);
+			path = Onboarding;
 			sourceTree = "<group>";
 		};
 		168D4C43CC0D920AA8A999F1 /* OpenClawIOSTests */ = {
@@ -172,6 +188,7 @@
 		7D59CC6E9D758028FCA28439 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				E3D9067726587C1497F9135E /* SavedConnectionsView.swift */,
 				FC07B60FCDE545F7751290DF /* SettingsView.swift */,
 			);
 			path = Settings;
@@ -191,6 +208,7 @@
 				26F9B76FA2D536AC534547E2 /* AggregateDiscoveryService.swift */,
 				1C09263FDC595D6C0186CAD1 /* BonjourDiscoveryService.swift */,
 				72964D3AA4370F4C361C88CC /* GatewayChannel.swift */,
+				1D220BD3DA6037835E1133E7 /* GatewayConnectionStore.swift */,
 				6D8522E405FD455CBEAA8FEB /* GatewayCredentialsStore.swift */,
 				D2AF0CCFE60156CEAD856F67 /* GatewayDiscoveryService.swift */,
 				A18FD05CA830973120D88D13 /* GatewayEndpoint.swift */,
@@ -200,6 +218,7 @@
 				E77EE868FB2BB6DEFF394A33 /* GatewaySessionDisplay.swift */,
 				F3390A0D1C328C372F62C638 /* GatewayTransport.swift */,
 				78DFCC9C8D8E370BEBBE5B06 /* MockGatewayOperatorService.swift */,
+				B467E4F4F8BB306A046603BD /* SavedGateway.swift */,
 				DB73846B85798989DBC59DA0 /* TailscaleDiscoveryService.swift */,
 			);
 			path = Gateway;
@@ -215,6 +234,7 @@
 				75396EFAE8894CB008854979 /* Device */,
 				67567FF57B8ACB692A483332 /* Home */,
 				7889431C8868718126944F94 /* Nodes */,
+				12623F13BD25D217CC6F7718 /* Onboarding */,
 				7D59CC6E9D758028FCA28439 /* Settings */,
 			);
 			path = Features;
@@ -401,6 +421,7 @@
 				1A5709731451765740EF9546 /* DeviceService.swift in Sources */,
 				CFFCA6298BC2AC15BC0D5A84 /* DeviceView.swift in Sources */,
 				440470293A48272DEA8A9C2E /* GatewayChannel.swift in Sources */,
+				219C6DE3B972FFA9CA0F2937 /* GatewayConnectionStore.swift in Sources */,
 				D1B9B0035F17126FCDB1FC6C /* GatewayCredentialsStore.swift in Sources */,
 				9854E6BB1B8392EC62FD4FCC /* GatewayDiscoveryService.swift in Sources */,
 				18A5F6E951146F64285B4DDC /* GatewayEndpoint.swift in Sources */,
@@ -412,10 +433,13 @@
 				BA0A887429D3C80FD056368E /* HomeView.swift in Sources */,
 				9D00C690534D83ABC28AD389 /* MockGatewayOperatorService.swift in Sources */,
 				5C56E76673FEC4663DB0B812 /* NodesView.swift in Sources */,
+				C6D4029B1A30CF99C2C3A423 /* OnboardingView.swift in Sources */,
 				CC32DB68D098C80C0AA66704 /* OpenClawIOSApp.swift in Sources */,
 				352BACAA1B2CA726112BF25F /* OpenClawTheme.swift in Sources */,
 				78EF32D9B4D9941CB2CD5D94 /* RootTab.swift in Sources */,
 				86EAFAC5C7B73BE4A4D937B3 /* RootView.swift in Sources */,
+				E88463AC679CC85CD5EB8DB3 /* SavedConnectionsView.swift in Sources */,
+				FF42B49CF0038E2073DBC1F9 /* SavedGateway.swift in Sources */,
 				80588D6CC78939BA9031EAD0 /* SettingsView.swift in Sources */,
 				47A6801A421EE8B4616C3362 /* TailscaleDiscoveryService.swift in Sources */,
 			);

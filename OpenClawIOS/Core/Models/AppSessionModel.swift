@@ -1,4 +1,5 @@
 import Observation
+import Foundation
 
 @Observable
 final class AppSessionModel: @unchecked Sendable {
@@ -11,8 +12,19 @@ final class AppSessionModel: @unchecked Sendable {
     @ObservationIgnored
     let credentialsStore: GatewayCredentialsStore
 
-    init(credentialsStore: GatewayCredentialsStore = GatewayCredentialsStore(storage: KeychainCredentialStorage())) {
-        self.credentialsStore = credentialsStore
+    @ObservationIgnored
+    let connectionStore: GatewayConnectionStore
+
+    init(connectionStore: GatewayConnectionStore? = nil, initialEndpoint: String = "http://127.0.0.1:18789") {
+        self.credentialsStore = GatewayCredentialsStore(storage: KeychainCredentialStorage())
+        self.connectionStore = connectionStore ?? GatewayConnectionStore()
+        self.gatewayEndpointInput = initialEndpoint
+    }
+
+    /// Switches to a saved connection by ID, updating endpoint and triggering reconnect.
+    func switchToConnection(_ connection: SavedGateway) {
+        self.gatewayEndpointInput = connection.endpointURL
+        connectionStore.updateLastConnected(id: connection.id)
     }
 
     func currentGatewayConfiguration() throws -> GatewayConnectionConfiguration {
