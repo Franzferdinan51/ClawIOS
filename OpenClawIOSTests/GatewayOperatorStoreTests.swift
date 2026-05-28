@@ -109,4 +109,52 @@ final class GatewayOperatorStoreTests: XCTestCase {
 
         XCTAssertEqual(store.transcript.map(\.text), ["newest"])
     }
+
+    func test_disconnectResetsAllState() async throws {
+        let service = MockGatewayOperatorService(
+            sessions: [.init(key: "agent:main", title: "Main")],
+            nodes: [.init(id: "node1", name: "Test Node", capabilityNames: ["device"])])
+        let store = GatewayOperatorStore(service: service)
+
+        try await store.connect()
+        try await store.selectSession("agent:main")
+        XCTAssertEqual(store.connectionState, .connected)
+        XCTAssertNotNil(store.selectedSessionKey)
+
+        store.disconnect()
+
+        XCTAssertEqual(store.connectionState, .disconnected)
+        XCTAssertEqual(store.sessions, [])
+        XCTAssertEqual(store.nodes, [])
+        XCTAssertNil(store.selectedSessionKey)
+        XCTAssertEqual(store.transcript, [])
+        XCTAssertNil(store.lastErrorMessage)
+    }
+
+    func test_clearErrorRemovesErrorMessage() async throws {
+        let service = MockGatewayOperatorService(
+            sessions: [.init(key: "agent:main", title: "Main")])
+        let store = GatewayOperatorStore(service: service)
+
+        try await store.connect()
+        store.lastErrorMessage = "Some error"
+
+        store.clearError()
+
+        XCTAssertNil(store.lastErrorMessage)
+    }
+
+    func test_patchSessionUpdatesModelAndThinking() async throws {
+        let service = MockGatewayOperatorService(
+            sessions: [.init(key: "agent:main", title: "Main")])
+        let store = GatewayOperatorStore(service: service)
+
+        try await store.connect()
+        try await store.selectSession("agent:main")
+
+        try await store.patchCurrentSession(model: "claude-opus", thinking: "high")
+
+        XCTAssertEqual(store.selectedModel, "claude-opus")
+        XCTAssertEqual(store.selectedThinking, "high")
+    }
 }
