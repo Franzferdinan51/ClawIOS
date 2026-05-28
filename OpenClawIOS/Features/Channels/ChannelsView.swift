@@ -8,14 +8,25 @@ struct ChannelsView: View {
 
     var body: some View {
         Group {
-            if gatewayStore.channels.isEmpty {
-                ContentUnavailableView(
-                    "No Channels",
-                    systemImage: "bubble.left.and.bubble.right",
-                    description: Text("Connect a gateway to see your messaging channels (WhatsApp, Telegram, Slack, Discord, and more).")
-                )
+            if gatewayStore.channels.isEmpty && !isRefreshing {
+                ContentUnavailableView {
+                    Label("No Channels", systemImage: "bubble.left.and.bubble.right")
+                } description: {
+                    Text("Connect a gateway to see your messaging channels (WhatsApp, Telegram, Slack, Discord, and more).")
+                } actions: {
+                    Button {
+                        Task { await self.refresh() }
+                    } label: {
+                        Label("Refresh", systemImage: "arrow.clockwise")
+                    }
+                    .buttonStyle(.bordered)
+                }
             } else {
                 List {
+                    if !gatewayStore.channels.isEmpty {
+                        channelSummarySection
+                    }
+
                     ForEach(gatewayStore.channels) { channel in
                         ChannelRow(channel: channel) {
                             Task {
@@ -24,18 +35,15 @@ struct ChannelsView: View {
                         }
                     }
                 }
-                .listStyle(.plain)
+                .listStyle(.insetGrouped)
             }
         }
         .navigationTitle(Self.screenTitle)
+        .navigationBarTitleDisplayMode(.large)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
-                    Task {
-                        isRefreshing = true
-                        try? await self.gatewayStore.refreshChannels()
-                        isRefreshing = false
-                    }
+                    Task { await self.refresh() }
                 } label: {
                     if isRefreshing {
                         ProgressView()
@@ -44,21 +52,62 @@ struct ChannelsView: View {
                         Image(systemName: "arrow.clockwise")
                     }
                 }
+                .disabled(isRefreshing)
             }
         }
         .task {
             try? await self.gatewayStore.refreshChannels()
         }
     }
+
+    private var channelSummarySection: some View {
+        Section {
+            HStack(spacing: 16) {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("\(connectedCount)")
+                        .font(.system(size: 32, weight: .bold, design: .rounded))
+                        .foregroundStyle(.green)
+                    Text("connected")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+
+                Spacer()
+
+                VStack(alignment: .trailing, spacing: 4) {
+                    Text("\(gatewayStore.channels.count)")
+                        .font(.system(size: 24, weight: .semibold, design: .rounded))
+                        .foregroundStyle(.secondary)
+                    Text("total channels")
+                        .font(.caption)
+                        .foregroundStyle(.tertiary)
+                }
+            }
+            .padding(.vertical, 4)
+        } header: {
+            Text("Channel Fleet")
+        }
+    }
+
+    private var connectedCount: Int {
+        gatewayStore.channels.filter { $0.status == .connected }.count
+    }
+
+    private func refresh() async {
+        isRefreshing = true
+        try? await gatewayStore.refreshChannels()
+        isRefreshing = false
+    }
 }
+
+// MARK: - Channel Row
 
 struct ChannelRow: View {
     let channel: GatewayChannel
     let onToggle: () -> Void
 
     var body: some View {
-        HStack(spacing: 14) {
-            // Platform icon
+        HStack(spacing: 12) {
             Image(systemName: platformIcon(channel.platform))
                 .font(.title2)
                 .foregroundStyle(platformColor(channel.platform))
@@ -69,7 +118,7 @@ struct ChannelRow: View {
                 Text(channel.name)
                     .font(.subheadline.weight(.semibold))
 
-                HStack(spacing: 6) {
+                HStack(spacing: 8) {
                     Circle()
                         .fill(statusColor(channel.status))
                         .frame(width: 7, height: 7)
@@ -79,10 +128,10 @@ struct ChannelRow: View {
 
                     if channel.messageCount > 0 {
                         Text("•")
-                            .foregroundStyle(.secondary)
-                        Text("\(channel.messageCount) messages")
+                            .foregroundStyle(.tertiary)
+                        Text("\(channel.messageCount) msgs")
                             .font(.caption)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(.tertiary)
                     }
                 }
             }
@@ -94,8 +143,9 @@ struct ChannelRow: View {
                 set: { _ in onToggle() }
             ))
             .labelsHidden()
+            .tint(OpenClawTheme.primary)
         }
-        .padding(.vertical, 8)
+        .padding(.vertical, 6)
     }
 
     private func platformIcon(_ platform: String) -> String {
