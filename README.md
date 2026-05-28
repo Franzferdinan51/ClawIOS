@@ -1,4 +1,4 @@
-# OpenClaw iOS
+# OpenClaw
 
 Native iPhone dashboard app for [OpenClaw](https://github.com/openclaw/openclaw). Connects to a local OpenClaw Gateway over WebSocket to provide operator chat, session management, node monitoring, device control, and messaging channels — mirroring the OpenClaw web dashboard on your iPhone.
 

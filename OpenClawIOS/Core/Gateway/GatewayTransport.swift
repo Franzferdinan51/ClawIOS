@@ -6,7 +6,7 @@ struct GatewayConnectionConfiguration: Equatable {
     var credentials: GatewayCredentials?
 }
 
-protocol GatewayTransport {
+protocol GatewayTransport: AnyObject, Sendable {
     func connect(configuration: GatewayConnectionConfiguration) async throws
     func disconnect() async
     func request(method: String, paramsJSON: String?, timeoutSeconds: Int) async throws -> Data
@@ -259,7 +259,7 @@ actor GatewayWebSocketTransport: GatewayTransport {
         return try JSONSerialization.data(withJSONObject: frame)
     }
 
-    private func messageData(from message: URLSessionWebSocketTask.Message) throws -> Data {
+    private nonisolated func messageData(from message: URLSessionWebSocketTask.Message) throws -> Data {
         switch message {
         case let .data(data):
             return data
@@ -273,7 +273,7 @@ actor GatewayWebSocketTransport: GatewayTransport {
         }
     }
 
-    private func jsonObject(from data: Data) throws -> [String: Any] {
+    private nonisolated func jsonObject(from data: Data) throws -> [String: Any] {
         guard let object = try JSONSerialization.jsonObject(with: data) as? [String: Any] else {
             throw GatewayTransportError.invalidResponse("Gateway frame was not a JSON object.")
         }
@@ -320,11 +320,9 @@ actor GatewayWebSocketTransport: GatewayTransport {
         }
     }
 
-    private func withTimeout<T>(seconds: Int, operation: @escaping () async throws -> T) async throws -> T {
+    private func withTimeout<T: Sendable>(seconds: Int, operation: @escaping @Sendable () async throws -> T) async throws -> T {
         try await withThrowingTaskGroup(of: T.self) { group in
-            group.addTask {
-                try await operation()
-            }
+            group.addTask(operation: operation)
             group.addTask {
                 try await Task.sleep(nanoseconds: UInt64(seconds) * 1_000_000_000)
                 throw GatewayTransportError.challengeTimedOut
@@ -422,13 +420,13 @@ private struct GatewayDeviceIdentity: Codable {
     }
 }
 
-private struct GatewayDeviceIdentityStore {
+private struct GatewayDeviceIdentityStore: Sendable {
     static let shared = GatewayDeviceIdentityStore()
 
-    private let storage: CredentialStorage
+    private let storage: KeychainCredentialStorage
     private let account = "gateway.device.identity.v1"
 
-    init(storage: CredentialStorage = KeychainCredentialStorage()) {
+    init(storage: KeychainCredentialStorage = KeychainCredentialStorage()) {
         self.storage = storage
     }
 

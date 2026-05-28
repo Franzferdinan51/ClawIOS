@@ -35,10 +35,11 @@ final class DebugViewModel {
         rpcError = ""
 
         do {
-            let data = try await transport.request(
+            let trimmedParams = rpcParams
+            let data = try await performRPCRequest(
+                store: store,
                 method: trimmedMethod,
-                paramsJSON: rpcParams,
-                timeoutSeconds: 15
+                paramsJSON: trimmedParams
             )
             if let json = try? JSONSerialization.jsonObject(with: data),
                let prettyData = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted),
@@ -60,4 +61,16 @@ final class DebugViewModel {
         rpcResult = ""
         rpcError = ""
     }
+}
+
+@MainActor
+private func performRPCRequest(
+    store: GatewayOperatorStore,
+    method: String,
+    paramsJSON: String
+) async throws -> Data {
+    guard let transport = store.transport else {
+        throw NSError(domain: "Debug", code: 1, userInfo: [NSLocalizedDescriptionKey: "No transport"])
+    }
+    return try await transport.request(method: method, paramsJSON: paramsJSON, timeoutSeconds: 15)
 }

@@ -11,7 +11,7 @@ protocol CredentialStorage {
     func load(account: String) throws -> Data?
 }
 
-final class KeychainCredentialStorage: CredentialStorage {
+final class KeychainCredentialStorage: CredentialStorage, @unchecked Sendable {
     private let service = "ai.openclaw.ios.dashboard"
 
     func save(_ value: Data, account: String) throws {

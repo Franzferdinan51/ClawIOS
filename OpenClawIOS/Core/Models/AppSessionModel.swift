@@ -1,7 +1,7 @@
 import Observation
 
 @Observable
-final class AppSessionModel {
+final class AppSessionModel: @unchecked Sendable {
     var selectedTab: RootTab = .home
     var gatewayEndpointInput = "http://127.0.0.1:18789"
     var gatewayConnectionSummary = "Disconnected"

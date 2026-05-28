@@ -1,6 +1,6 @@
 import Foundation
 
-final class MockGatewayOperatorService: GatewayOperatorService {
+final class MockGatewayOperatorService: GatewayOperatorService, @unchecked Sendable {
     var sessions: [GatewaySessionSummary]
     var nodes: [GatewayNodeSummary]
     var history: [String: [GatewayChatMessage]]

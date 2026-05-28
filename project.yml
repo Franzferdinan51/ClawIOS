@@ -2,33 +2,73 @@ name: OpenClawIOS
 options:
   deploymentTarget:
     iOS: "18.0"
+  xcodeVersion: "16.0"
+  createIntermediateGroups: true
+  generateEmptyDirectories: true
+
 packages: {}
+
 targets:
   OpenClawIOS:
     type: application
     platform: iOS
     sources:
-      - OpenClawIOS
+      - path: OpenClawIOS
+        excludes:
+          - "**/*.md"
     settings:
       base:
         GENERATE_INFOPLIST_FILE: true
         PRODUCT_BUNDLE_IDENTIFIER: ai.openclaw.ios.dashboard
+        PRODUCT_NAME: "OpenClaw"
+        MARKETING_VERSION: "1.0.0"
+        CURRENT_PROJECT_VERSION: "1"
         INFOPLIST_KEY_UILaunchScreen_Generation: true
+        INFOPLIST_KEY_UISupportedInterfaceOrientations: "UIInterfaceOrientationPortrait"
+        INFOPLIST_KEY_UISupportedInterfaceOrientations~ipad: "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight"
+        INFOPLIST_KEY_CFBundleDisplayName: "OpenClaw"
+        DEVELOPMENT_TEAM: ""
+        CODE_SIGN_STYLE: Automatic
+        SWIFT_VERSION: "6.0"
+        IPHONEOS_DEPLOYMENT_TARGET: "18.0"
+        BUNDLE_ID: "ai.openclaw.ios.dashboard"
+        PRODUCT_MODULE_NAME: "OpenClawIOS"
+
   OpenClawIOSTests:
     type: bundle.unit-test
     platform: iOS
     sources:
-      - OpenClawIOSTests
+      - path: OpenClawIOSTests
     settings:
       base:
         GENERATE_INFOPLIST_FILE: true
+        PRODUCT_BUNDLE_IDENTIFIER: ai.openclaw.ios.dashboard.tests
+        MARKETING_VERSION: "1.0.0"
+        CURRENT_PROJECT_VERSION: "1"
+        DEVELOPMENT_TEAM: ""
+        CODE_SIGN_STYLE: Automatic
+        SWIFT_VERSION: "6.0"
+        IPHONEOS_DEPLOYMENT_TARGET: "18.0"
+        TEST_HOST: "$(BUILD_DIR)/Debug-iphonesimulator/OpenClaw.app/OpenClaw"
+        BUNDLE_LOADER: "$(TEST_HOST)"
     dependencies:
       - target: OpenClawIOS
+
 schemes:
   OpenClawIOS:
     build:
       targets:
         OpenClawIOS: all
+    run:
+      config: Debug
     test:
+      config: Debug
+      gatherCoverageData: true
       targets:
         - OpenClawIOSTests
+    profile:
+      config: Release
+    analyze:
+      config: Debug
+    archive:
+      config: Release

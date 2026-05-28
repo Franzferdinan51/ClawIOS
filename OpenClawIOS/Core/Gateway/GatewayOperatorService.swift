@@ -1,6 +1,6 @@
 import Foundation
 
-protocol GatewayOperatorService {
+protocol GatewayOperatorService: Sendable {
     func connect() async throws
     func listSessions() async throws -> [GatewaySessionSummary]
     func listNodes() async throws -> [GatewayNodeSummary]
@@ -14,15 +14,15 @@ protocol GatewayOperatorService {
     func toggleChannel(id: String, enabled: Bool) async throws
 }
 
-final class LiveGatewayOperatorService: GatewayOperatorService {
-    private let transport: GatewayTransport
-    private let configurationProvider: () throws -> GatewayConnectionConfiguration
+final class LiveGatewayOperatorService: GatewayOperatorService, @unchecked Sendable {
+    private let transport: any GatewayTransport
+    private let configurationProvider: @Sendable () throws -> GatewayConnectionConfiguration
     private let encoder = JSONEncoder()
     private let decoder = JSONDecoder()
 
     init(
-        transport: GatewayTransport,
-        configurationProvider: @escaping () throws -> GatewayConnectionConfiguration
+        transport: any GatewayTransport,
+        configurationProvider: @escaping @Sendable () throws -> GatewayConnectionConfiguration
     ) {
         self.transport = transport
         self.configurationProvider = configurationProvider
