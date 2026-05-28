@@ -59,6 +59,14 @@ struct RootView: View {
                 DebugView()
             }
             .tabItem {
+                Label(RootTab.debug.title, systemImage: RootTab.debug.systemImage)
+            }
+            .tag(RootTab.debug)
+
+            NavigationStack {
+                SettingsView()
+            }
+            .tabItem {
                 Label(RootTab.settings.title, systemImage: RootTab.settings.systemImage)
             }
             .tag(RootTab.settings)

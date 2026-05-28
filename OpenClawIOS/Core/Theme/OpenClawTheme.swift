@@ -10,6 +10,11 @@ enum OpenClawTheme {
     static let primaryHover = Color(hex: "ea580c")
     static let accent = Color(hex: "fb923c")        // lighter orange
 
+    // MARK: - App Identity
+
+    static let appName = "OpenClaw"
+    static let appVersion = "Phase 1"
+
     // MARK: - Backgrounds
 
     static let background = Color(hex: "0f172a")    // slate-900 (dark mode base)

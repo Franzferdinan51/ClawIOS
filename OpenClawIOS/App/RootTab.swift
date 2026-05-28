@@ -7,6 +7,7 @@ enum RootTab: String, CaseIterable, Identifiable {
     case device
     case channels
     case activity
+    case debug
     case settings
 
     var id: String { self.rawValue }
@@ -25,6 +26,8 @@ enum RootTab: String, CaseIterable, Identifiable {
             "Channels"
         case .activity:
             "Activity"
+        case .debug:
+            "Debug"
         case .settings:
             "Settings"
         }
@@ -43,6 +46,8 @@ enum RootTab: String, CaseIterable, Identifiable {
         case .channels:
             "bubble.left.and.bubble.right.fill"
         case .activity:
+            "ant.fill"
+        case .debug:
             "ant.fill"
         case .settings:
             "gearshape"
