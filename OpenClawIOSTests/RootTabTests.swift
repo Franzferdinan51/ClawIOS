@@ -18,4 +18,20 @@ final class RootTabTests: XCTestCase {
         XCTAssertEqual(ChannelsView.screenTitle, "Channels")
         XCTAssertEqual(SettingsView.screenTitle, "Gateway Settings")
     }
+
+    func test_rootTabCountMatchesAllCases() {
+        XCTAssertEqual(RootTab.allCases.count, 8)
+    }
+
+    func test_rootTabSystemImagesAreSet() {
+        for tab in RootTab.allCases {
+            XCTAssertFalse(tab.systemImage.isEmpty, "Tab \(tab) has no system image")
+        }
+    }
+
+    func test_rootTabAllHaveTitles() {
+        for tab in RootTab.allCases {
+            XCTAssertFalse(tab.title.isEmpty, "Tab \(tab) has no title")
+        }
+    }
 }
