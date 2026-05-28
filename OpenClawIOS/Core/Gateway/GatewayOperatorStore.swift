@@ -78,8 +78,11 @@ final class GatewayOperatorStore {
     }
 
     func refreshDashboard() async throws {
+        self.lastErrorMessage = nil
         do {
-            try await self.connect()
+            self.sessions = try await self.service.listSessions()
+            self.nodes = try await self.service.listNodes()
+            self.connectionState = .connected
 
             let preferredSessionKey = self.selectedSessionKey.flatMap { selectedKey in
                 self.sessions.contains(where: { $0.key == selectedKey }) ? selectedKey : nil
@@ -95,6 +98,27 @@ final class GatewayOperatorStore {
             self.lastErrorMessage = error.localizedDescription
             throw error
         }
+    }
+
+    func refreshSessions() async throws {
+        self.lastErrorMessage = nil
+        do {
+            self.sessions = try await self.service.listSessions()
+            self.nodes = try await self.service.listNodes()
+            self.connectionState = .connected
+        } catch {
+            self.lastErrorMessage = error.localizedDescription
+            throw error
+        }
+    }
+
+    func disconnect() {
+        self.connectionState = .disconnected
+        self.sessions = []
+        self.nodes = []
+        self.transcript = []
+        self.selectedSessionKey = nil
+        self.lastErrorMessage = nil
     }
 
     func selectSession(_ sessionKey: String) async throws {

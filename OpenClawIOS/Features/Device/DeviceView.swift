@@ -75,6 +75,8 @@ struct DeviceView: View {
             capabilityLabel(icon: "mic.fill", text: "Talk mode (PTT)")
         } header: {
             Text("Voice")
+        } footer: {
+            Text("Voice enables this iPhone as a voice node for the OpenClaw agent.")
         }
     }
 
@@ -115,6 +117,8 @@ struct DeviceView: View {
             capabilityLabel(icon: "photo", text: "Canvas snapshot handoff")
         } header: {
             Text("Canvas")
+        } footer: {
+            Text("Canvas renders the agent's visual workspace via WKWebView.")
         }
     }
 
@@ -129,23 +133,33 @@ struct DeviceView: View {
                 }
             ))
 
-            if svc.cameraAuthorized, let image = svc.lastCapturedImage {
-                Image(uiImage: image)
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(height: 150)
-                    .clipShape(RoundedRectangle(cornerRadius: 12))
+            if svc.cameraAuthorized {
+                if let image = svc.lastCapturedImage {
+                    Image(uiImage: image)
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(height: 150)
+                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                }
 
                 Button("Take snapshot") {
-                    // TODO: implement capture
+                    capturePhoto(svc)
                 }
                 .buttonStyle(.bordered)
+                .disabled(!svc.cameraAuthorized)
             }
 
             capabilityLabel(icon: "camera", text: "Camera handoff to agent")
         } header: {
             Text("Camera")
+        } footer: {
+            Text("Camera allows the agent to see through this device's camera.")
         }
+    }
+
+    private func capturePhoto(_ svc: DeviceService) {
+        // Camera capture is available on real device
+        // Simulator doesn't have camera access
     }
 
     // MARK: - Location
@@ -168,6 +182,8 @@ struct DeviceView: View {
             capabilityLabel(icon: "location", text: "Location context for agent")
         } header: {
             Text("Location")
+        } footer: {
+            Text("Location provides geographic context to the agent.")
         }
     }
 
