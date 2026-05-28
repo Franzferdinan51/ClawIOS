@@ -24,6 +24,7 @@
 		47A6801A421EE8B4616C3362 /* TailscaleDiscoveryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB73846B85798989DBC59DA0 /* TailscaleDiscoveryService.swift */; };
 		5216691517A992CBD2511F12 /* GatewayEndpointTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC8A1F433A440BA512A93E5 /* GatewayEndpointTests.swift */; };
 		5C56E76673FEC4663DB0B812 /* NodesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5DDCBC05409696E8E0EB45 /* NodesView.swift */; };
+		5CEF5863243A91DFEFD6A9DB /* AppSessionModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C23DDADCCE756227CEDC0A /* AppSessionModelTests.swift */; };
 		66E7104110105D0D395D3CDE /* GatewaySessionDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77EE868FB2BB6DEFF394A33 /* GatewaySessionDisplay.swift */; };
 		68395C98DCDC41C4EC465E4E /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A60D6CEF8CA92E6AE71D2AF8 /* ChatView.swift */; };
 		78EF32D9B4D9941CB2CD5D94 /* RootTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = BADF2D4A270449767D5B1217 /* RootTab.swift */; };
@@ -80,6 +81,7 @@
 		A18FD05CA830973120D88D13 /* GatewayEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatewayEndpoint.swift; sourceTree = "<group>"; };
 		A60D6CEF8CA92E6AE71D2AF8 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		BADF2D4A270449767D5B1217 /* RootTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootTab.swift; sourceTree = "<group>"; };
+		C9C23DDADCCE756227CEDC0A /* AppSessionModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSessionModelTests.swift; sourceTree = "<group>"; };
 		CD23D8667BFDC912750743B1 /* GatewayOperatorStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatewayOperatorStoreTests.swift; sourceTree = "<group>"; };
 		D2AF0CCFE60156CEAD856F67 /* GatewayDiscoveryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatewayDiscoveryService.swift; sourceTree = "<group>"; };
 		DB5DDCBC05409696E8E0EB45 /* NodesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodesView.swift; sourceTree = "<group>"; };
@@ -106,6 +108,7 @@
 		168D4C43CC0D920AA8A999F1 /* OpenClawIOSTests */ = {
 			isa = PBXGroup;
 			children = (
+				C9C23DDADCCE756227CEDC0A /* AppSessionModelTests.swift */,
 				71A53A01BD4D2998AE1F2461 /* GatewayCredentialsStoreTests.swift */,
 				9AC8A1F433A440BA512A93E5 /* GatewayEndpointTests.swift */,
 				3A58A99962E55E5CF5E39B7E /* GatewayLiveOperatorServiceTests.swift */,
@@ -353,6 +356,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5CEF5863243A91DFEFD6A9DB /* AppSessionModelTests.swift in Sources */,
 				D72AB553CA727642462557FC /* GatewayCredentialsStoreTests.swift in Sources */,
 				5216691517A992CBD2511F12 /* GatewayEndpointTests.swift in Sources */,
 				32B08A49953731C65C47C9D5 /* GatewayLiveOperatorServiceTests.swift in Sources */,

@@ -121,6 +121,73 @@ final class GatewayLiveOperatorServiceTests: XCTestCase {
         XCTAssertEqual(methods, ["sessions.reset", "sessions.compact"])
     }
 
+    func test_patchSessionSendsModelAndThinkingParams() async throws {
+        let transport = RecordingGatewayTransport()
+        let service = try self.makeService(transport: transport)
+
+        try await service.patchSession(sessionKey: "agent:main", model: "claude-opus", thinking: "high")
+
+        let methods = await transport.requestedMethods
+        XCTAssertEqual(methods, ["sessions.patch"])
+
+        let params = await transport.lastRequestParams
+        XCTAssertTrue(params?.contains("\"model\":\"claude-opus\"") ?? false)
+        XCTAssertTrue(params?.contains("\"thinking\":\"high\"") ?? false)
+    }
+
+    func test_listChannelsMapsChannelPayload() async throws {
+        let transport = RecordingGatewayTransport()
+        await transport.setStubbedResponse(
+            try Self.jsonData([
+            "channels": [
+                [
+                    "channelId": "wa-1",
+                    "displayName": "WhatsApp",
+                    "platform": "whatsapp",
+                    "status": "connected",
+                    "enabled": true,
+                    "messageCount": 42
+                ],
+                [
+                    "channelId": "tg-1",
+                    "displayName": "Telegram",
+                    "platform": "telegram",
+                    "status": "disconnected",
+                    "enabled": false,
+                    "messageCount": 0
+                ]
+            ]
+        ]),
+            for: "channels.list")
+        let service = try self.makeService(transport: transport)
+
+        let channels = try await service.listChannels()
+
+        XCTAssertEqual(channels.count, 2)
+        XCTAssertEqual(channels[0].id, "wa-1")
+        XCTAssertEqual(channels[0].name, "WhatsApp")
+        XCTAssertEqual(channels[0].platform, "whatsapp")
+        XCTAssertEqual(channels[0].status, .connected)
+        XCTAssertEqual(channels[0].enabled, true)
+        XCTAssertEqual(channels[0].messageCount, 42)
+        XCTAssertEqual(channels[1].status, .disconnected)
+        XCTAssertEqual(channels[1].enabled, false)
+    }
+
+    func test_toggleChannelSendsChannelIdAndEnabled() async throws {
+        let transport = RecordingGatewayTransport()
+        let service = try self.makeService(transport: transport)
+
+        try await service.toggleChannel(id: "wa-1", enabled: false)
+
+        let methods = await transport.requestedMethods
+        XCTAssertEqual(methods, ["channels.toggle"])
+
+        let params = await transport.lastRequestParams
+        XCTAssertTrue(params?.contains("\"channelId\":\"wa-1\"") ?? false)
+        XCTAssertTrue(params?.contains("\"enabled\":false") ?? false)
+    }
+
     private func makeService(transport: RecordingGatewayTransport) throws -> LiveGatewayOperatorService {
         let endpoint = try GatewayEndpoint(userInput: "https://demo.openclaw.ai:18789")
         return LiveGatewayOperatorService(
@@ -141,6 +208,7 @@ private actor RecordingGatewayTransport: GatewayTransport {
     var lastConnectionConfiguration: GatewayConnectionConfiguration?
     var stubbedResponses: [String: Data] = [:]
     var requestedMethods: [String] = []
+    var lastRequestParams: String?
 
     func setStubbedResponse(_ data: Data, for method: String) {
         self.stubbedResponses[method] = data
@@ -154,6 +222,7 @@ private actor RecordingGatewayTransport: GatewayTransport {
 
     func request(method: String, paramsJSON: String?, timeoutSeconds: Int) async throws -> Data {
         self.requestedMethods.append(method)
+        self.lastRequestParams = paramsJSON
         return self.stubbedResponses[method] ?? Data("{}".utf8)
     }
 }
